@@ -173,57 +173,111 @@ const styles = `
     font-size: 2rem;
   }
 
-  /* 📱 Mobile Styles */
+  /* 📱 Mobile Styles - تصميم كارد راقي */
   @media (max-width: 768px) {
+    /* Container الرئيسي */
     .service-item {
-      padding: 1.5rem 0;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0;
+      margin-bottom: 2rem !important;
+      border: none;
+      background: linear-gradient(135deg, rgba(143, 147, 165, 0.1) 0%, rgba(22, 22, 27, 0.5) 100%);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      display: flex;
     }
 
+    .service-item:last-child {
+      margin-bottom: 2rem !important;
+    }
+
+    /* الرقم - نخفيه */
     .service-number {
-      font-size: 0.9rem;
-      margin-right: 1rem;
-      min-width: 1.5rem;
+      display: none;
     }
 
-    .service-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-
+    /* السهم في الصورة */
     .service-icon-btn {
-      width: 36px;
-      height: 36px;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 34px;
+      height: 34px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      z-index: 3;
+      transition: all 0.3s ease;
+    }
+
+    .service-icon-btn:active {
+      transform: scale(0.95);
+      background: rgba(143, 147, 165, 0.9);
     }
 
     .service-icon-btn svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
     }
 
-    /* الصورة تظهر دايماً على الموبايل */
+    /* الصورة فوق - cover عشان تاخد المكان كله */
     .service-image-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
       opacity: 1 !important;
-      width: 100px;
-      height: 70px;
-      pointer-events: none;
+      width: 100%;
+      height: 200px;
+      margin: 0;
+      order: -1;
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(143, 147, 165, 0.08), rgba(22, 22, 27, 0.3));
+      overflow: hidden;
+      padding: 0;
     }
 
     .service-image {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      object-fit: cover;
+      object-position: center;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
     }
 
     .service-image-placeholder {
-      width: 100px;
-      height: 70px;
-      font-size: 1.5rem;
+      width: 100%;
+      height: 100%;
+      font-size: 2.5rem;
+      border-radius: 0;
+      background: linear-gradient(135deg, rgba(143, 147, 165, 0.15), rgba(22, 22, 27, 0.3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* العنوان تحت الصورة */
+    .service-item > a:first-of-type {
+      display: block;
+      order: 1;
+    }
+
+    .service-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 1.25rem 1.25rem;
+      position: relative;
+      z-index: 2;
+      line-height: 1.4;
+      text-align: center;
     }
   }
 
