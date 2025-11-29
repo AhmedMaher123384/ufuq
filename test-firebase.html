@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Firebase Integration Test</h1>
+    
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="test-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Quick Links</h2>
+        <ul>
+            <li><a href="http://localhost:5174/" target="_blank">Main Website</a></li>
+            <li><a href="http://localhost:5174/dashboard" target="_blank">Dashboard</a></li>
+        </ul>
+    </div>
+
+    <script>
+        function addTestResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('test-results');
+            const resultElement = document.createElement('div');
+            resultElement.className = type;
+            resultElement.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            resultsDiv.appendChild(resultElement);
+        }
+
+        // Test basic connectivity
+        addTestResult('Testing Firebase integration...', 'info');
+        
+        // Check if the development server is running
+        fetch('http://localhost:5174/')
+            .then(response => {
+                if (response.ok) {
+                    addTestResult('✅ Main website is accessible', 'success');
+                } else {
+                    addTestResult('❌ Main website returned error: ' + response.status, 'error');
+                }
+            })
+            .catch(error => {
+                addTestResult('❌ Main website is not accessible: ' + error.message, 'error');
+            });
+
+        // Test dashboard
+        fetch('http://localhost:5174/dashboard')
+            .then(response => {
+                if (response.ok) {
+                    addTestResult('✅ Dashboard is accessible', 'success');
+                } else {
+                    addTestResult('❌ Dashboard returned error: ' + response.status, 'error');
+                }
+            })
+            .catch(error => {
+                addTestResult('❌ Dashboard is not accessible: ' + error.message, 'error');
+            });
+
+        addTestResult('Test completed. Open the browser console to see detailed Firebase logs.', 'info');
+    </script>
+</body>
+</html>
