@@ -83,7 +83,7 @@ const HeroSection: React.FC = () => {
             |
           </span> 
           <a 
-            href="https://www.linkedin.com/company/fassla-software" 
+            href="https://www.linkedin.com/company/" 
             className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
@@ -96,7 +96,7 @@ const HeroSection: React.FC = () => {
             |
           </span> 
           <a 
-            href="https://www.instagram.com/fasslasoftware" 
+            href="https://www.instagram.com/" 
             className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
@@ -109,7 +109,7 @@ const HeroSection: React.FC = () => {
             |
           </span> 
           <a 
-            href="https://www.facebook.com/fasslasoftware" 
+            href="https://www.facebook.com/" 
             className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
