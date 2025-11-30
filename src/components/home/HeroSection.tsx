@@ -83,7 +83,7 @@ const HeroSection: React.FC = () => {
             |
           </span> 
           <a 
-            href="https://www.linkedin.com/company/" 
+            href="https://www.linkedin.com/" 
             className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
