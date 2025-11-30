@@ -28,8 +28,9 @@ export const createProductSlugNameOnly = (name: string): string => {
 
 // إنشاء رابط احترافي للفئة
 export const createCategorySlug = (id: number, name: string): string => {
+  // Use original category name only; do not append numeric ID
   const slug = slugify(name);
-  return slug ? `${slug}-${id}` : `category-${id}`;
+  return slug || 'category';
 };
 
 // إنشاء رابط احترافي للخدمة (بدون رقم وبالاسم الإنجليزي فقط)

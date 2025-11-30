@@ -578,7 +578,7 @@ const App: React.FC = () => {
       {/* Navbar moved to main layout to avoid duplication */}
       
       {/* Main Content */}
-      <div className="pt-0">
+      <div id="main-content" className="pt-0">
         {/* Hero Section */}
         <section data-section="hero">
           <HeroSection />

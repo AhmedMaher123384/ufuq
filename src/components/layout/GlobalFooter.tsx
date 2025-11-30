@@ -42,7 +42,7 @@ const GlobalFooter: React.FC = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   const categoriesLinks = mockCategories.map((c) => ({
-    to: `/service/${createCategorySlug(c.id, c.name_ar || c.name)}`,
+    to: `/service/${createCategorySlug(c.id, c.name)}`,
     label: c.name_ar || c.name,
   }));
 
@@ -145,14 +145,29 @@ const GlobalFooter: React.FC = () => {
                       <MapPin className="w-4 h-4 text-[#8F93A5]" />
                       <span>{t('footer.location')}</span>
                     </div>
-                    <div className="flex items-center justify-center md:justify-end gap-2">
-                      <Phone className="w-4 h-4 text-[#8F93A5]" />
-                      <span dir="ltr">+966 54 309 8895</span>
-                    </div>
-                    <div className="flex items-center justify-center md:justify-end gap-2">
-                      <Mail className="w-4 h-4 text-[#8F93A5]" />
-                      <span>info@UfuqDigital.com</span>
-                    </div>
+                      <div className="flex gap-2">
+      <Phone className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+      <a
+        href="tel:+966543098895"
+        dir="ltr"
+        className="block text-left hover:text-white transition-colors duration-200 break-words"
+        style={{ paddingLeft: '2px' }}
+      >
+        +966 54 309 8895
+      </a>
+    </div>
+                    {/* Email */}
+    <div className="flex gap-2">
+      <Mail className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
+      <a
+        href="mailto:info@UfuqDigital.com"
+        dir="ltr"
+        className="block text-left hover:text-white transition-colors duration-200 break-words"
+        style={{ paddingLeft: '2px' }}
+      >
+        info@UfuqDigital.com
+      </a>
+    </div>
                   </div>
                 </div>
 

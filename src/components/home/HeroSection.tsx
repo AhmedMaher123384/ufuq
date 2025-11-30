@@ -1,29 +1,41 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import hero from '../../assets/herro.jpg'; // ← اسم الملف كما طلبت: "herro.jpg"
+import hero from '../../assets/hhero.webp';
+import heroMobile from '../../assets/herrro.jpeg';
 
 const HeroSection: React.FC = () => {
   const { t } = useTranslation();
+  const mobileImgRef = useRef<HTMLImageElement | null>(null);
+  const desktopImgRef = useRef<HTMLImageElement | null>(null);
 
-  const titlePart1 = t("home.hero.titlePart1");
-  const titlePart11 = t("home.hero.titlePart11");
-  const titlePart2 = t("home.hero.titlePart2");
-  const subtitle = t("home.hero.subtitle");
+  useEffect(() => {
+    // Apply native fetch priority via DOM to avoid React warning and TS typing issues
+    mobileImgRef.current?.setAttribute('fetchpriority', 'high');
+    desktopImgRef.current?.setAttribute('fetchpriority', 'high');
+  }, []);
 
   return (
     <section className="relative h-screen w-full overflow-hidden pt-28 bg-black" data-section="hero">
-      {/* الصورة تغطي القسم كله (بدون بلور، بأعلى جودة) */}
+      {/* صورة الموبايل - تظهر أقل من 768px */}
       <img
-        src={hero}
+        ref={mobileImgRef}
+        src={heroMobile}
         alt="Hero background"
-        className="absolute inset-0 w-full h-full object-cover z-0" // ← object-cover لتمتد على كامل المساحة
+        className="absolute inset-0 w-full h-full object-cover md:hidden z-0"
         loading="eager"
         decoding="async"
-        fetchPriority="high"
       />
-
-      {/* ⚠️ تم إزالة الـ gradient overlay تمامًا حسب رغبتك — الصورة نقية 100% */}
+      
+      {/* صورة الديسكتوب - تظهر من 768px وأكثر */}
+      <img
+        ref={desktopImgRef}
+        src={hero}
+        alt="Hero background"
+        className="absolute inset-0 w-full h-full object-cover hidden md:block z-0"
+        loading="eager"
+        decoding="async"
+      />
 
       {/* Sidebars — LEFT (Contact Info) */}
       <div className="absolute left-8 top-1/2 -translate-y-1/2 z-20 hidden lg:flex">
@@ -43,7 +55,8 @@ const HeroSection: React.FC = () => {
             |
           </span> 
           <a 
-            href="mailto:info@fasslasoftware.com" 
+            href="mailto:info@UfuqDigital.com 
+" 
             className="text-white text-sm font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
             style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
           >
@@ -112,38 +125,31 @@ const HeroSection: React.FC = () => {
         <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full w-full text-center px-6 sm:px-8 space-y-8 pb-24">
-        <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tight leading-[1.05] font-cairo">
-          <span className="block text-white">{titlePart1}</span>
-        </h1>
-        <h1 className="flex items-baseline gap-2 text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] font-extrabold tracking-tight leading-[1.05] font-cairo">
-          <span className="text-white">{titlePart11}</span>
-          <span className="bg-gradient-to-r from-[#24a67b] to-[#24a67b] bg-clip-text text-transparent">{titlePart2}</span>
-        </h1>
+      {/* Main Content - الموبايل زي ما هو، والديسكتوب تحت سيطرتك */}
+<div className="relative z-10 h-full w-full">
 
-        <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-3xl leading-relaxed font-light px-4 font-cairo">
-          {subtitle}
-        </p>
+  {/* الموبايل فقط – نفس ألوان الديسكتوب + مرفوعة فوق شوية */}
+  {/* الموبايل – سطر واحد بالكامل + ألوان سيلفر وأخضر غامق + مرفوعة فوق */}
+<h1 
+  className="block md:hidden text-2xl sm:text-3xl font-bold tracking-tight text-center font-cairo px-6 absolute inset-x-0"
+  style={{ top: '10%' }}   
+>
+    <span className="text-gray-300">نحو </span>
+  <span className="text-green-700 font-extrabold text-2xl sm:text-3xl">أُفق</span>
+    <span className="text-gray-300"> جديد من الإبداع الرقمي</span>
+</h1>
 
-        {/* Scroll Indicator */}
-        <button
-          type="button"
-          aria-label="Scroll to next section"
-          onClick={() => {
-            const currentSection = document.querySelector('[data-section="hero"]');
-            const nextSection = currentSection?.nextElementSibling;
-            if (nextSection && 'scrollIntoView' in nextSection) {
-              (nextSection as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-          }}
-          className="group absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-8 h-12 border-2 border-white rounded-full flex justify-center items-start p-1">
-            <div className="w-1 h-2 bg-white rounded-full animate-bounce-slow"></div>
-          </div>
-        </button>
-      </div>
+  {/* === الديسكتوب: جملة سطر واحد + كلمة "أُفق" خضرا غامق === */}
+{/* === الديسكتوب فقط: أُفق أخضر غامق + الباقي سيلفر فاتح ناصع === */}
+<div className="hidden md:block absolute top-[50%] left-[15%] -translate-y-1/2">
+  <h1 className="text-3xl lg:text-5xl font-bold tracking-wider text-right font-cairo whitespace-nowrap">
+    <span className="text-gray-300">نحو </span>
+    <span className="text-green-700">أُفق</span>
+    <span className="text-gray-300"> جديد من الإبداع الرقمي</span>
+  </h1>
+</div>
+
+</div>
     </section>
   );
 };

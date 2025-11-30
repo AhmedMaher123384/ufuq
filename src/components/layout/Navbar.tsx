@@ -53,8 +53,13 @@ function Navbar() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const isLogoHoveredRef = useRef(false);
   useEffect(() => { isLogoHoveredRef.current = isLogoHovered; }, [isLogoHovered]);
+
   const isMenuOpenRef = useRef(false);
   useEffect(() => { isMenuOpenRef.current = isMenuOpen; }, [isMenuOpen]);
+
+  // Ref for the mobile bottom sheet panel
+  const bottomSheetRef = useRef<HTMLDivElement | null>(null);
+
   const [isCartDropdownOpen, setIsCartDropdownOpen] = useState(false);
   const [isCartHovered, setIsCartHovered] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -77,39 +82,28 @@ function Navbar() {
   useEffect(() => {
     const controlNavbar = () => {
       const currentScrollY = window.scrollY;
-
       if (isMenuOpenRef.current) {
-        // إذا كانت قائمة الموبايل مفتوحة، لا نغيّر حالة النافبار هنا
         lastScrollYRef.current = currentScrollY;
         return;
       }
-
       if (currentScrollY < 10) {
-        // أعلى الصفحة: نظهر النافبار ونخفي اللوجو الطافي
         setScrolled(false);
         setShowNavbar(true);
       } else {
-        // تم السحب للأسفل
         setScrolled(true);
-
         if (isLogoHoveredRef.current) {
-          // تحويم على اللوجو يُظهر النافبار
           setShowNavbar(true);
         } else if (currentScrollY > lastScrollYRef.current && currentScrollY > 100) {
-          // سحب لأسفل: إخفاء النافبار
           setShowNavbar(false);
         } else if (currentScrollY < lastScrollYRef.current) {
-          // سحب لأعلى: إظهار النافبار
           setShowNavbar(true);
         }
       }
-
       lastScrollYRef.current = currentScrollY;
     };
 
     const throttledControlNavbar = throttle(controlNavbar, 50);
     window.addEventListener('scroll', throttledControlNavbar, { passive: true });
-
     return () => window.removeEventListener('scroll', throttledControlNavbar);
   }, []);
 
@@ -125,7 +119,6 @@ function Navbar() {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -136,9 +129,7 @@ function Navbar() {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
         setIsUserMenuOpen(false);
       }
-      // تحسين منطق إغلاق البوب أب - لا نغلقه إذا كان المستخدم يحوم عليه
       if (cartDropdownRef.current && !cartDropdownRef.current.contains(event.target as Node)) {
-        // تأخير الإغلاق للسماح بالانتقال بين العناصر
         setTimeout(() => {
           if (!isCartHovered) {
             setIsCartDropdownOpen(false);
@@ -150,7 +141,6 @@ function Navbar() {
     if (isUserMenuOpen || isCartDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -160,7 +150,6 @@ function Navbar() {
   useEffect(() => {
     const handleMobileMenuClose = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      // Check if click is on the overlay (not on the menu panel)
       if (isMenuOpen && target.classList.contains('mobile-menu-overlay')) {
         setIsMenuOpen(false);
       }
@@ -168,10 +157,8 @@ function Navbar() {
 
     if (isMenuOpen) {
       document.addEventListener('mousedown', handleMobileMenuClose);
-      // Prevent body scroll when menu is open
       document.body.style.overflow = 'hidden';
     } else {
-      // Restore body scroll when menu is closed
       document.body.style.overflow = 'unset';
     }
 
@@ -181,14 +168,13 @@ function Navbar() {
     };
   }, [isMenuOpen]);
 
-  // إعادة تهيئة تتبّع السحب بعد تبديل اللغة لمنع توقف السلوك
+  // إعادة تهيئة تتبّع السحب بعد تبديل اللغة
   useEffect(() => {
     lastScrollYRef.current = window.scrollY;
     setScrolled(window.scrollY >= 10);
     setShowNavbar(true);
     setIsLogoHovered(false);
     isLogoHoveredRef.current = false;
-    // ابدأ دورة حساب واحدة لضبط الحالة فوراً
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event('scroll'));
     });
@@ -197,21 +183,96 @@ function Navbar() {
   // Hide navbar when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
-      // عند فتح قائمة الموبايل نخفي النافبار
       setShowNavbar(false);
     } else {
-      // عند إغلاقها نُظهره من جديد
       setShowNavbar(true);
     }
   }, [isMenuOpen]);
 
-  // Throttle function for better performance
+  // Attach drag-to-close interactions to the mobile bottom sheet without using a callback ref
+  useEffect(() => {
+    const el = bottomSheetRef.current;
+    if (!el) return;
+
+    let startY = 0;
+    let currentY = 0;
+    let isDragging = false;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (!isMenuOpen) return;
+      startY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!startY || !isMenuOpen) return;
+      currentY = e.touches[0].clientY;
+      const diff = currentY - startY;
+      if (diff > 8) {
+        isDragging = true;
+        const translateY = Math.min(diff * 0.7, 300);
+        el.style.transform = `translateY(${translateY}px) scale(${1 - translateY / 2000})`;
+        el.style.opacity = `${1 - translateY / 800}`;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      if (isDragging) {
+        const diff = currentY - startY;
+        if (diff > 100) {
+          el.style.transform = 'translateY(100%) scale(0.97)';
+          el.style.opacity = '0';
+          setTimeout(() => setIsMenuOpen(false), 250);
+        } else {
+          el.style.transform = 'translateY(0) scale(1)';
+          el.style.opacity = '1';
+        }
+        isDragging = false;
+        startY = 0;
+        currentY = 0;
+      }
+    };
+
+    // Desktop experimental support
+    const handleMouseDown = (e: MouseEvent) => {
+      if (!isMenuOpen) return;
+      startY = e.clientY;
+    };
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!startY || !isMenuOpen) return;
+      currentY = e.clientY;
+      const diff = currentY - startY;
+      if (diff > 8) {
+        isDragging = true;
+        const translateY = Math.min(diff * 0.7, 300);
+        el.style.transform = `translateY(${translateY}px) scale(${1 - translateY / 2000})`;
+        el.style.opacity = `${1 - translateY / 800}`;
+      }
+    };
+    const handleMouseUp = () => handleTouchEnd();
+
+    el.addEventListener('touchstart', handleTouchStart, { passive: true });
+    el.addEventListener('touchmove', handleTouchMove, { passive: false });
+    el.addEventListener('touchend', handleTouchEnd);
+    el.addEventListener('mousedown', handleMouseDown);
+    el.addEventListener('mousemove', handleMouseMove);
+    el.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      el.removeEventListener('touchstart', handleTouchStart);
+      el.removeEventListener('touchmove', handleTouchMove);
+      el.removeEventListener('touchend', handleTouchEnd);
+      el.removeEventListener('mousedown', handleMouseDown);
+      el.removeEventListener('mousemove', handleMouseMove);
+      el.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isMenuOpen]);
+
+  // Throttle function
   const throttle = (func: (...args: any[]) => void, delay: number) => {
     let timeoutId: number | null = null;
     let lastExecTime = 0;
     return (...args: any[]) => {
       const currentTime = Date.now();
-
       if (currentTime - lastExecTime > delay) {
         func(...args);
         lastExecTime = currentTime;
@@ -291,11 +352,9 @@ function Navbar() {
       'productAddedToCart',
       'forceCartUpdate'
     ];
-
     const cartCountEvents = [
       'cartCountChanged'
     ];
-
     const wishlistEvents = [
       'wishlistUpdated',
       'productAddedToWishlist',
@@ -306,15 +365,12 @@ function Navbar() {
     cartEvents.forEach(event => {
       window.addEventListener(event, handleCartUpdate);
     });
-
     cartCountEvents.forEach(event => {
       window.addEventListener(event, handleCartCountChange);
     });
-
     wishlistEvents.forEach(event => {
       window.addEventListener(event, handleWishlistUpdate);
     });
-
     window.addEventListener('categoriesUpdated', handleCategoriesUpdate);
 
     const handleStorageChange = (e: StorageEvent) => {
@@ -327,14 +383,12 @@ function Navbar() {
         handleWishlistUpdate();
       }
     };
-
     window.addEventListener('storage', handleStorageChange);
 
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (user?.id) {
       const savedCartCount = localStorage.getItem(`cartCount_${user.id}`);
       const savedWishlistCount = localStorage.getItem(`wishlistCount_${user.id}`);
-
       if (savedCartCount) {
         setCartItemsCount(parseInt(savedCartCount));
       }
@@ -345,12 +399,10 @@ function Navbar() {
       console.log('👤 [Navbar] Loading wishlist for guest user');
       const savedWishlist = localStorage.getItem('wishlist');
       console.log('💾 [Navbar] Guest wishlist from localStorage:', savedWishlist);
-
       if (savedWishlist) {
         try {
           const parsedWishlist = JSON.parse(savedWishlist);
           console.log('📦 [Navbar] Parsed guest wishlist:', parsedWishlist);
-
           if (Array.isArray(parsedWishlist)) {
             console.log('✅ [Navbar] Setting guest wishlist count:', parsedWishlist.length);
             setWishlistItemsCount(parsedWishlist.length);
@@ -372,15 +424,12 @@ function Navbar() {
       cartEvents.forEach(event => {
         window.removeEventListener(event, handleCartUpdate);
       });
-
       cartCountEvents.forEach(event => {
         window.removeEventListener(event, handleCartCountChange);
       });
-
       wishlistEvents.forEach(event => {
         window.removeEventListener(event, handleWishlistUpdate);
       });
-
       window.removeEventListener('categoriesUpdated', handleCategoriesUpdate);
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -389,7 +438,6 @@ function Navbar() {
   const fetchCartCount = async () => {
     try {
       const userData = localStorage.getItem('user');
-
       if (!userData) {
         const localCart = localStorage.getItem('cart');
         if (localCart) {
@@ -435,11 +483,9 @@ function Navbar() {
       }
 
       console.log('🔄 [Navbar] Fetching cart count for user:', user.id);
-
       try {
         const data = await apiCall(API_ENDPOINTS.USER_CART(user.id));
         console.log('📦 [Navbar] Raw cart data:', data);
-
         let totalItems = 0;
         if (Array.isArray(data)) {
           totalItems = data.reduce((sum: number, item: any) => sum + (item.quantity || 0), 0);
@@ -448,17 +494,13 @@ function Navbar() {
         } else if (data && typeof data === 'object' && typeof data.totalItems === 'number') {
           totalItems = data.totalItems;
         }
-
         console.log('📊 [Navbar] Cart count calculated from server:', totalItems);
         setCartItemsCount(totalItems);
-
         localStorage.setItem('lastCartCount', totalItems.toString());
         localStorage.setItem(`cartCount_${user.id}`, totalItems.toString());
-
         console.log('💾 [Navbar] Cart count saved to localStorage:', totalItems);
       } catch (apiError) {
         console.error('❌ [Navbar] API error, falling back to localStorage:', apiError);
-
         const localCart = localStorage.getItem('cart');
         if (localCart) {
           try {
@@ -474,7 +516,6 @@ function Navbar() {
             console.error('❌ [Navbar] Error parsing local cart in API fallback:', parseError);
           }
         }
-
         const lastCount = localStorage.getItem('lastCartCount');
         if (lastCount) {
           const count = parseInt(lastCount, 10) || 0;
@@ -488,7 +529,6 @@ function Navbar() {
       }
     } catch (error) {
       console.error('❌ [Navbar] Error fetching cart count:', error);
-
       const localCart = localStorage.getItem('cart');
       if (localCart) {
         try {
@@ -502,7 +542,6 @@ function Navbar() {
           console.error('❌ [Navbar] Error parsing local cart fallback:', parseError);
         }
       }
-
       setCartItemsCount(0);
       localStorage.setItem('lastCartCount', '0');
     }
@@ -511,17 +550,13 @@ function Navbar() {
   const fetchWishlistCount = async () => {
     try {
       console.log('🔄 [Navbar] fetchWishlistCount called');
-
       const savedWishlist = localStorage.getItem('wishlist');
       console.log('💾 [Navbar] Raw wishlist from localStorage:', savedWishlist);
-
       let wishlistCount = 0;
-
       if (savedWishlist) {
         try {
           const parsedWishlist = JSON.parse(savedWishlist);
           console.log('📦 [Navbar] Parsed wishlist:', parsedWishlist);
-
           if (Array.isArray(parsedWishlist)) {
             wishlistCount = parsedWishlist.length;
             console.log('✅ [Navbar] Calculated wishlist count:', wishlistCount);
@@ -536,11 +571,9 @@ function Navbar() {
       } else {
         console.log('📭 [Navbar] No wishlist found in localStorage');
       }
-
       console.log('📊 [Navbar] Final wishlist count:', wishlistCount);
       setWishlistItemsCount(wishlistCount);
       localStorage.setItem('lastWishlistCount', wishlistCount.toString());
-
       const userData = localStorage.getItem('user');
       if (userData) {
         try {
@@ -552,7 +585,6 @@ function Navbar() {
           console.error('❌ [Navbar] Error parsing user data:', error);
         }
       }
-
       console.log('💾 [Navbar] Wishlist count saved to localStorage:', wishlistCount);
     } catch (error) {
       console.error('❌ [Navbar] Error fetching wishlist count:', error);
@@ -563,7 +595,6 @@ function Navbar() {
 
   const fetchCategories = async () => {
     try {
-      // Align navbar categories exactly with footer: use mockCategories directly, no filtering
       const mappedCategories = mockCategories.map((c) => ({
         id: c.id,
         name: c.name,
@@ -574,12 +605,10 @@ function Navbar() {
         description_en: (c as any).description_en,
         image: c.image
       }));
-
       setCategories(mappedCategories);
       localStorage.setItem('cachedCategories', JSON.stringify(mappedCategories));
     } catch (error) {
       console.error('Error fetching categories (fallback to mock):', error);
-      // Fallback: still use mockCategories directly
       const mappedCategories = mockCategories.map((c) => ({ id: c.id, name: c.name, name_ar: (c as any).name_ar, name_en: (c as any).name_en, description: c.description, description_ar: (c as any).description_ar, description_en: (c as any).description_en, image: c.image }));
       setCategories(mappedCategories);
     }
@@ -591,7 +620,6 @@ function Navbar() {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
     setIsAuthModalOpen(false);
-
     const mergeLocalCartWithUserCart = async () => {
       try {
         const localCart = localStorage.getItem('cart');
@@ -599,7 +627,6 @@ function Navbar() {
           const localItems = JSON.parse(localCart);
           if (localItems.length > 0) {
             console.log('🔄 [Navbar] Merging local cart with user cart:', localItems.length, 'items');
-
             for (const item of localItems) {
               try {
                 await apiCall(API_ENDPOINTS.USER_CART(userData.id), {
@@ -620,14 +647,11 @@ function Navbar() {
                 console.error('❌ [Navbar] Error merging item:', item.productId, error);
               }
             }
-
             try {
               const serverCart = await apiCall(API_ENDPOINTS.USER_CART(userData.id));
               localStorage.setItem('cart', JSON.stringify(serverCart));
               console.log('✅ [Navbar] Cart merged successfully, new cart size:', serverCart.length);
-
               window.dispatchEvent(new CustomEvent('cartUpdated'));
-
               smartToast.frontend.success('تم دمج سلة التسوق بنجاح! 🛒');
             } catch (error) {
               console.error('❌ [Navbar] Error fetching merged cart:', error);
@@ -642,13 +666,9 @@ function Navbar() {
         console.error('❌ [Navbar] Error in cart merge:', error);
       }
     };
-
     mergeLocalCartWithUserCart();
-
     smartToast.frontend.success(`مرحباً بك ${userData.firstName}! 🎉`);
   };
-
- 
 
   const openAuthModal = () => {
     setIsAuthModalOpen(true);
@@ -683,7 +703,6 @@ function Navbar() {
             }`}
           >
             <div className="flex items-center justify-between h-14 sm:h-16 px-4 sm:px-6">
-              
               {/* Mobile Menu Button & Cart */}
               <div className="lg:hidden flex items-center space-x-2">
                 <button
@@ -696,19 +715,14 @@ function Navbar() {
                   </div>
                   <div className="absolute inset-0 bg-white/5 scale-0 group-active:scale-100 transition-transform duration-150 rounded-lg"></div>
                 </button>
-
                 {/* Mobile Cart Button removed per mock-data requirement */}
-
-
               </div>
-
               {/* Logo */}
               <div className="flex items-center">
                 <Link to="/" onClick={() => setIsMenuOpen(false)} className="cursor-pointer">
                   <img src={logo} alt="Logo" className="h-14 sm:h-16 w-auto" />
                 </Link>
               </div>
-
               {/* Desktop Navigation Links - Exact order: Home, Services, first 3 categories, Contact */}
               <div className="hidden lg:flex items-center space-x-1">
                 {/* Home */}
@@ -723,7 +737,6 @@ function Navbar() {
                   {t('nav.home')}
                   <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-[#18b5d8] to-[#0891b2] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </Link>
-
                 {/* Services */}
                 <Link
                   key="nav-services"
@@ -736,13 +749,12 @@ function Navbar() {
                   {t('nav.categories')}
                   <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-[#18b5d8] to-[#0891b2] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </Link>
-
                 {/* First 3 Categories */}
                 {categories && categories.length > 0 && (
                   categories.slice(0, 3).map((c) => (
                     <Link
                       key={`cat-${c.id}`}
-                      to={`/service/${createCategorySlug(c.id, (c as any).name_ar || c.name)}`}
+                      to={`/service/${createCategorySlug(c.id, c.name)}`}
                       onClick={() => setIsMenuOpen(false)}
                       className={`relative px-3 py-2 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-all duration-300 text-sm`}
                     >
@@ -750,7 +762,6 @@ function Navbar() {
                     </Link>
                   ))
                 )}
-
                 {/* Contact */}
                 <Link
                   key="nav-contact"
@@ -764,309 +775,165 @@ function Navbar() {
                   <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-[#18b5d8] to-[#0891b2] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </Link>
               </div>
-
               {/* Action Buttons */}
               <div className="hidden lg:flex items-center space-x-3">
-                
                 {/* Search Button */}
                 <LiveSearch />
-
                 {/* Language Selector */}
                 <LanguageSelector />
-
-      {/* Cart Button removed per mock-data requirement */}
-
-      {/* Wishlist Button removed per mock-data requirement */}
-
-                {/* Auth user menu and login button removed per mock-data requirement */}
+                {/* Cart / Wishlist / Auth removed per mock-data requirement */}
               </div>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
-      <div 
-        className={`lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] transition-opacity duration-300 mobile-menu-overlay ${
-          isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            setIsMenuOpen(false);
-          }
-        }}
-      >
-        {/* Mobile Menu Panel - Professional Glassmorphism */}
-        <div 
-          className={`fixed right-0 top-0 h-full w-full max-w-sm transform transition-all duration-700 ease-out flex flex-col ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-          onClick={(e) => e.stopPropagation()}
-          style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 100%)',
-            backdropFilter: 'blur(40px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-            borderLeft: '1px solid rgba(255,255,255,0.15)',
-            boxShadow: `
-              -20px 0 60px rgba(0,0,0,0.3),
-              inset 1px 0 1px rgba(255,255,255,0.1),
-              inset 0 1px 1px rgba(255,255,255,0.05)
-            `,
-            maxHeight: '100vh',
-            overflowY: 'hidden'
-          }}
-        >
-          {/* Animated Background Orbs */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div 
-              className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-20 animate-pulse"
-              style={{
-                background: 'radial-gradient(circle, rgba(24,181,216,0.3) 0%, transparent 70%)',
-                animationDuration: '4s'
-              }}
-            ></div>
-            <div 
-              className="absolute top-1/3 -right-10 w-24 h-24 rounded-full opacity-15 animate-pulse"
-              style={{
-                background: 'radial-gradient(circle, rgba(8,145,178,0.4) 0%, transparent 70%)',
-                animationDuration: '6s',
-                animationDelay: '2s'
-              }}
-            ></div>
-            <div 
-              className="absolute bottom-1/4 -right-16 w-32 h-32 rounded-full opacity-10 animate-pulse"
-              style={{
-                background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%)',
-                animationDuration: '8s',
-                animationDelay: '1s'
-              }}
-            ></div>
+  {/* === MOBILE MENU — Emerald Depth (Bottom Sheet) — أروش، أنقى، أنضف === */}
+{isMobile && (
+  <div
+    className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-300 ${
+      isMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+    }`}
+    style={{ backgroundColor: 'rgba(0, 0, 0, 0.55)' }}
+    onClick={() => {
+      // إغلاق أنيق: scale-down + fade
+      const panel = document.querySelector('.mobile-bottom-sheet') as HTMLElement;
+      if (panel) {
+        panel.style.transform = 'translateY(80%) scale(0.97)';
+        panel.style.opacity = '0';
+        setTimeout(() => setIsMenuOpen(false), 250);
+      } else {
+        setIsMenuOpen(false);
+      }
+    }}
+  >
+    <div
+      className="mobile-bottom-sheet fixed bottom-0 left-0 right-0 bg-[#16161b] rounded-t-3xl overflow-hidden"
+      style={{
+        maxHeight: '92vh',
+        transform: isMenuOpen ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.97)',
+        transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s',
+        opacity: isMenuOpen ? 1 : 0,
+        willChange: 'transform, opacity',
+        touchAction: 'none',
+        boxShadow: '0 -12px 40px rgba(0,0,0,0.35)',
+      }}
+      ref={bottomSheetRef}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Handle Bar — أنحف، أنظف */}
+      <div className="flex justify-center pt-3 pb-2">
+        <div className="w-8 h-1 bg-[#3a3a42] rounded-full"></div>
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col flex-1 overflow-y-auto px-5 pb-6" style={{ maxHeight: '82vh' }}>
+        {/* Logo — مركز، نظيف */}
+        <div className="flex justify-center mb-7">
+          <Link to="/" onClick={() => setIsMenuOpen(false)}>
+            <img src={logo} alt="Logo" className="h-10 w-auto opacity-95" />
+          </Link>
+        </div>
+
+        {/* Search & Settings */}
+        <div className="mb-7">
+          <div className="flex items-center mb-3">
+            <div className="w-0.5 h-3 bg-[#10b981] rounded-full mr-3"></div>
+            <h3 className="text-[#7c7c84] text-[11px] font-semibold uppercase tracking-widest">
+              {t('nav.search_and_settings')}
+            </h3>
+          </div>
+          <div className="space-y-3.5">
+            <LiveSearch />
+            <LanguageSelector />
+          </div>
+        </div>
+
+        {/* Navigation — أروش، أنضف */}
+        <div>
+          <div className="flex items-center mb-4">
+            <div className="w-0.5 h-3 bg-[#10b981] rounded-full mr-3"></div>
+            <h3 className="text-[#7c7c84] text-[11px] font-semibold uppercase tracking-widest">
+              {t('nav.pages')}
+            </h3>
           </div>
 
-          {/* Header Section - Enhanced Glassmorphism */}
-          <div 
-            className="relative flex justify-between items-center p-6 border-b border-white/15"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)'
-            }}
-          >
-            <Link to="/" onClick={() => setIsMenuOpen(false)} className="transition-all duration-300 hover:scale-105 hover:drop-shadow-lg">
-              <img src={logo} alt="Logo" className="h-20 w-auto filter drop-shadow-sm" />
-            </Link>
-            <button 
-              onClick={() => setIsMenuOpen(false)} 
-              className="relative text-white p-3 rounded-2xl transition-all duration-300 group overflow-hidden"
-              aria-label="إغلاق القائمة"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.1)'
-              }}
-            >
-              <div className="relative z-10 transition-transform duration-300 group-hover:rotate-90">
-                <X size={24} />
-              </div>
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-2xl"
+          <div className="space-y-1.5">
+            {[
+              { name: t('nav.home'), href: '/', icon: Home, color: '#10b981' },
+              { name: t('nav.categories'), href: '/services', icon: Package, color: '#f59e0b' },
+              ...((categories && categories.length > 0)
+                ? categories.slice(0, 3).map((c) => ({
+                    name: c.name,
+                    href: `/service/${createCategorySlug(c.id, c.name)}`,
+                    icon: Grid3X3,
+                    color: '#3b82f6'
+                  }))
+                : []),
+              { name: t('nav.contact'), href: '/contact', icon: Phone, color: '#ef4444' }
+            ].map((link, index) => (
+              <Link
+                key={link.name}
+                to={link.href}
+                onClick={() => setIsMenuOpen(false)}
+                className={`flex items-center px-3.5 py-3 rounded-xl transition-all duration-250 group ${
+                  isActive(link.href)
+                    ? 'bg-[#10b981] bg-opacity-5 text-white'
+                    : 'text-[#b0b0b8] hover:bg-[#1a1a1f]'
+                }`}
                 style={{
-                  background: 'linear-gradient(135deg, rgba(239,68,68,0.2) 0%, rgba(220,38,38,0.1) 100%)'
+                  animation: isMenuOpen ? `fadeInUp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 60}ms forwards` : 'none',
+                  opacity: 0,
+                  transform: 'translateY(8px)',
                 }}
-              ></div>
-            </button>
-          </div>
-
-          {/* Content Container */}
-          <div className="flex flex-col flex-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 120px)' }}>
-            {/* User Section removed per mock-data requirement */}
-
-            {/* Search & Settings Section - Mobile */}
-            <div 
-              className="relative p-4 border-b border-white/15"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)'
-              }}
-            >
-              {/* Section Header */}
-              <div className="flex items-center mb-4">
-                <div 
-                  className="w-0.5 h-4 rounded-full mr-2"
+              >
+                {/* Icon Container — أخضر عند النشط */}
+                <div
+                  className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-250 group-hover:scale-105"
                   style={{
-                    background: 'linear-gradient(135deg, #18b5d8 0%, #0891b2 100%)',
-                    boxShadow: '0 0 8px rgba(24,181,216,0.4)'
+                    backgroundColor: isActive(link.href)
+                      ? `${link.color}15`
+                      : 'rgba(255,255,255,0.04)',
                   }}
-                ></div>
-                <h3 className="text-white/70 text-xs font-bold uppercase tracking-wider">{t('nav.search_and_settings')}</h3>
-              </div>
+                >
+                  <link.icon
+                    size={16}
+                    className="text-[#a0a0a8]"
+                    style={{ color: isActive(link.href) ? link.color : undefined }}
+                  />
+                </div>
 
-              {/* Search Component */}
-              <div className="mb-3">
-                <LiveSearch />
-              </div>
+                <span className="font-medium text-[15px] flex-1 mr-2">{link.name}</span>
 
-              {/* Language Selector */}
-              <div className="mb-3">
-                <LanguageSelector />
-              </div>
-            </div>
-
-            {/* Navigation Links Section - Enhanced Glassmorphism */}
-            <div 
-              className="relative p-4 flex-1"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)',
-                backdropFilter: 'blur(15px)',
-                WebkitBackdropFilter: 'blur(15px)'
-              }}
-            >
-              {/* Section Header */}
-              <div className="flex items-center mb-4">
-                <div 
-                  className="w-0.5 h-4 rounded-full mr-2"
-                  style={{
-                    background: 'linear-gradient(135deg, #18b5d8 0%, #0891b2 100%)',
-                    boxShadow: '0 0 8px rgba(24,181,216,0.4)'
-                  }}
-                ></div>
-                <h3 className="text-white/70 text-xs font-bold uppercase tracking-wider">{t('nav.pages')}</h3>
-              </div>
-              
-              {/* Navigation Links */}
-              <div className="space-y-2">
-                {[
-                  { name: t('nav.home'), href: '/', icon: Home, color: '#18b5d8' },
-                  { name: t('nav.categories'), href: '/services', icon: Package, color: '#f97316' },
-                  { name: t('nav.contact'), href: '/contact', icon: Phone, color: '#ef4444' }
-                ].map((link, index) => (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`relative flex items-center px-3 py-2.5 text-white/90 hover:text-white rounded-lg transition-all duration-300 space-x-2 group touch-manipulation overflow-hidden ${
-                      isActive(link.href) ? 'text-white' : ''
-                    }`}
-                    style={{
-                      background: isActive(link.href) 
-                        ? `linear-gradient(135deg, ${link.color}20 0%, ${link.color}10 100%)`
-                        : 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-                      backdropFilter: 'blur(15px)',
-                      WebkitBackdropFilter: 'blur(15px)',
-                      border: isActive(link.href) 
-                        ? `1px solid ${link.color}40`
-                        : '1px solid rgba(255,255,255,0.1)',
-                      animationDelay: `${index * 100}ms`,
-                      animation: isMenuOpen ? 'slideInRight 0.5s ease-out forwards' : 'none'
-                    }}
-                  >
-                    {/* Hover Background */}
-                    <div 
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-lg"
-                      style={{
-                        background: `linear-gradient(135deg, ${link.color}15 0%, ${link.color}08 100%)`
-                      }}
-                    ></div>
-                    
-                    {/* Icon Container */}
-                    <div 
-                      className="relative w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110"
-                      style={{
-                        background: isActive(link.href) 
-                          ? `linear-gradient(135deg, ${link.color} 0%, ${link.color}cc 100%)`
-                          : 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.08) 100%)',
-                        boxShadow: isActive(link.href) 
-                          ? `0 2px 12px ${link.color}40`
-                          : '0 1px 6px rgba(0,0,0,0.1)'
-                      }}
-                    >
-                      <link.icon 
-                        size={16} 
-                        className="relative z-10"
-                        style={{ 
-                          color: isActive(link.href) ? '#ffffff' : link.color 
-                        }}
-                      />
-                      {isActive(link.href) && (
-                        <div 
-                          className="absolute inset-0 rounded-lg opacity-50"
-                          style={{
-                            background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 70%)'
-                          }}
-                        ></div>
-                      )}
-                    </div>
-                    
-                    {/* Text */}
-                    <span className="font-medium text-sm relative z-10 flex-1">{link.name}</span>
-                    
-                    {/* Arrow */}
-                    <ChevronLeft 
-                      size={14} 
-                      className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1 relative z-10"
-                      style={{ color: link.color }}
-                    />
-                    
-                    {/* Active Indicator */}
-                    {isActive(link.href) && (
-                      <div 
-                        className="absolute left-0 top-1/2 transform -translate-y-1/2 w-0.5 h-6 rounded-r-full"
-                        style={{
-                          background: `linear-gradient(135deg, ${link.color} 0%, ${link.color}cc 100%)`,
-                          boxShadow: `0 0 10px ${link.color}60`
-                        }}
-                      ></div>
-                    )}
-                    
-                    {/* Shimmer Effect on Hover */}
-                    <div 
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-lg"
-                      style={{
-                        background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%)',
-                        transform: 'translateX(-100%)',
-                        animation: 'shimmer 2s ease-in-out infinite'
-                      }}
-                    ></div>
-                  </Link>
-                ))}
-
-                {/* Categories (after Services) - first 3 only */}
-                {categories && categories.length > 0 && (
-                  <div className="mt-3 border-t border-white/10 pt-3">
-                    <div className="flex items-center mb-2">
-                      <div 
-                        className="w-0.5 h-4 rounded-full mr-2"
-                        style={{
-                          background: 'linear-gradient(135deg, #18b5d8 0%, #0891b2 100%)',
-                          boxShadow: '0 0 8px rgba(24,181,216,0.4)'
-                        }}
-                      ></div>
-                      <h4 className="text-white/70 text-xs font-bold uppercase tracking-wider">{isRTL ? 'خدماتنا' : 'Services'}</h4>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      {categories.slice(0, 3).map((c) => (
-                        <Link
-                          key={`m-cat-${c.id}`}
-                          to={`/service/${createCategorySlug(c.id, (c as any).name_ar || c.name)}`}
-                          onClick={() => setIsMenuOpen(false)}
-                          className="px-3 py-2 text-white/80 hover:text-white rounded-lg bg-white/5 hover:bg-white/10 transition-all text-sm"
-                        >
-                          {(c as any).name_ar || c.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+                {/* Active Indicator — خط أيسر (لـ RTL) */}
+                {isActive(link.href) && (
+                  <div
+                    className="absolute left-0 top-1/2 w-0.5 h-5 rounded-full -translate-y-1/2"
+                    style={{ backgroundColor: '#10b981' }}
+                  ></div>
                 )}
-              </div>
-            </div>
-
-            {/* Action Buttons Section */}
-            {/* Wishlist removed per mock-data requirement */}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* Custom Animation */}
+      <style >{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </div>
+  </div>
+)}
 
       {/* AuthModal removed per mock-data requirement */}
     </>

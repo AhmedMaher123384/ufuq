@@ -66,6 +66,7 @@ const LayoutWrapper: React.FC = () => {
   const [notificationQuantity, setNotificationQuantity] = React.useState(1);
   const hideNavbarPaths = ['/login', '/admin', '/dashboard', '/checkout', '/thank-you'];
   const hideFooterPaths = ['/login', '/admin', '/dashboard', '/checkout', '/thank-you'];
+  const hideWhatsAppPaths = ['/dashboard'];
 
   // إيقاف شاشة التحميل بعد التحميل الأولي للصفحة
   React.useEffect(() => {
@@ -84,6 +85,9 @@ const LayoutWrapper: React.FC = () => {
   const shouldHideFooter = isLoading || hideFooterPaths.some(path => 
     path === '/login' || path === '/checkout' ? location.pathname === path : location.pathname.startsWith(path)
   );
+
+  // إخفاء زر الواتساب في الداشبورد
+  const shouldHideWhatsApp = hideWhatsAppPaths.some(path => location.pathname.startsWith(path));
 
   // Listen for cart notifications
   React.useEffect(() => {
@@ -109,10 +113,10 @@ const LayoutWrapper: React.FC = () => {
     <>
       <CustomCursor />
       {!shouldHideNavbar && <Navbar />}
-      <WhatsAppButton />
+      {!shouldHideWhatsApp && <WhatsAppButton />}
       
       <div className={contentClass}>
-        <Routes>
+        <Routes> 
           {/* E-commerce Routes */}
           <Route path="/" element={<App />} />
           <Route path="/products" element={<AllProducts />} />

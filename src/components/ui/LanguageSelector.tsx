@@ -6,6 +6,7 @@ const LanguageSelector: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const isRTL = (i18n.language || '').toLowerCase().startsWith('ar');
 
   const languages = [
     { code: 'ar', name: 'العربية', nativeName: 'العربية', flag: '🇸🇦', dir: 'rtl' },
@@ -34,6 +35,11 @@ const LanguageSelector: React.FC = () => {
     setIsOpen(false);
   };
 
+  // Ensure dropdown closes and repositions correctly when language changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [i18n.language]);
+
   return (
     <div className="relative" ref={dropdownRef}>
       {/* Language Selector Trigger Button */}
@@ -50,9 +56,12 @@ const LanguageSelector: React.FC = () => {
 
       {/* Language Dropdown */}
       {isOpen && (
-        <div className="absolute top-full mt-1 right-0 w-40 bg-white/10 backdrop-blur-2xl rounded-lg shadow-2xl border border-white/20 overflow-hidden z-50 animate-in slide-in-from-top-2 duration-300">
+        <div
+          className={`absolute top-full mt-1 ${isRTL ? 'left-0' : 'right-0'} w-40 bg-[#16161b] rounded-lg shadow-2xl border border-[#222] overflow-hidden z-50 animate-in slide-in-from-top-2 duration-300`}
+          dir={isRTL ? 'rtl' : 'ltr'}
+        >
           {/* Header */}
-          <div className="px-2 py-1.5 border-b border-white/15 bg-white/5">
+          <div className="px-2 py-1.5 border-b border-[#222] bg-[#16161b]">
             <div className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-white/90">
               <Languages className="w-2.5 h-2.5" />
               {t('common.language', 'اللغة')}
@@ -67,8 +76,8 @@ const LanguageSelector: React.FC = () => {
                 onClick={() => changeLanguage(language.code)}
                 className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-all duration-300 mb-0.5 ${
                   currentLanguage.code === language.code
-                    ? 'bg-cyan-500/20 text-white'
-                    : 'text-white/80 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#1e1e24] text-white'
+                    : 'text-white/80 hover:text-white hover:bg-[#1e1e24]'
                 }`}
               >
                 <span className="text-sm">{language.flag}</span>

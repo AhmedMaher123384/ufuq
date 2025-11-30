@@ -16,7 +16,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import WhatsAppButton from './ui/WhatsAppButton';
-import { extractIdFromSlug, isValidSlug } from '../utils/slugify';
+import { slugify } from '../utils/slugify';
 import { mockCategories } from '../mock/categories';
 import { formSubmissionService } from '../services/formSubmissionService';
 import { smartToast } from '../utils/toastConfig';
@@ -604,22 +604,15 @@ const CategoryPage: React.FC = () => {
 
   useEffect(() => {
     let foundCategory: Category | null = null;
-    
+
     if (slug) {
-      if (isValidSlug(slug)) {
-        const catId = extractIdFromSlug(slug);
-        foundCategory = mockCategories.find(c => c.id === catId) || null;
-      } else {
-        foundCategory = mockCategories.find(c => {
-          const nameSlug = c.name?.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '') || '';
-          return nameSlug === slug.toLowerCase();
-        }) || null;
-      }
+      const decoded = decodeURIComponent(slug);
+      foundCategory = mockCategories.find(c => slugify(c.name || '') === decoded) || null;
     } else if (categoryId && !isNaN(parseInt(categoryId, 10))) {
       const catId = parseInt(categoryId, 10);
       foundCategory = mockCategories.find(c => c.id === catId) || null;
     }
-    
+
     setCategory(foundCategory);
   }, [categoryId, slug]);
 
@@ -634,8 +627,14 @@ const CategoryPage: React.FC = () => {
     };
 
     const handleClick = (e: MouseEvent) => {
-      if (window.innerWidth < 1024 && formRef.current?.contains(e.target as Node)) {
-        setShowMobileCTA(false);
+      if (window.innerWidth < 1024) {
+        const target = e.target as HTMLElement;
+        // لا تخفي CTA لو كان الضغط على زر إغلاق الفورم
+        const clickedClose = target.closest('[data-close-form="true"]');
+        if (clickedClose) return;
+        if (formRef.current?.contains(target)) {
+          setShowMobileCTA(false);
+        }
       }
     };
 
@@ -647,6 +646,13 @@ const CategoryPage: React.FC = () => {
       document.removeEventListener('click', handleClick);
     };
   }, []);
+
+  // عند إغلاق الفورم على الموبايل، أظهر زر CTA تلقائيًا
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024 && !isFormExpanded) {
+      setShowMobileCTA(true);
+    }
+  }, [isFormExpanded]);
 
   const renderDynamicForm = () => {
     if (!category) return null;
@@ -764,7 +770,11 @@ const CategoryPage: React.FC = () => {
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-black text-white">ابدأ طلبك الآن</h2>
                   <button 
-                    onClick={() => setIsFormExpanded(false)} 
+                    data-close-form="true"
+                    onClick={() => {
+                      setIsFormExpanded(false);
+                      setShowMobileCTA(true);
+                    }} 
                     className="text-[#8F93A5] hover:text-white transition-colors"
                   >
                     <ChevronDown className="w-6 h-6 rotate-180" />
@@ -779,7 +789,7 @@ const CategoryPage: React.FC = () => {
 
       {/* Mobile CTA — auto hide */}
       {!isFormExpanded && showMobileCTA && (
-        <div className="fixed bottom-20 left-3 right-3 z-50 lg:hidden">
+        <div className="fixed bottom-32 left-3 right-3 z-50 lg:hidden">
           <button
             onClick={() => {
               setIsFormExpanded(true);

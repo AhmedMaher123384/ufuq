@@ -31,7 +31,7 @@ createdAt: '2024-10-01T10:00:00Z',
 {
 id: 2,
 name: 'E-commerce Website Development',
-name_ar: 'تطوير مواقع التجارة الإلكترونية',
+name_ar: 'تطوير المتاجر الإلكترونية',
 description: 'End-to-end e-commerce development that enables secure, scalable online stores—improving conversions, automating order flows, and providing customers a smooth shopping experience.',
 description_ar: 'خدمات تطوير المتاجر الإلكترونية بشكل احترافي تمكّنك تبيع منتجاتك أونلاين بسهولة وأمان. المتجر الإلكتروني يشتغل لك 24/7، يستقبل طلبات، يعرض منتجاتك، ويدير المدفوعات والطلبات بشكل منظم. منصة قوية وسهلة الاستخدام ترفع مبيعاتك، تنظّم عملياتك، وتقدّم تجربة شراء مريحة للعملاء.',
 image: cat2,

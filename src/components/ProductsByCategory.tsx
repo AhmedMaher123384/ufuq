@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronLeft, ArrowRight, Package, Filter, Grid, List, RefreshCw } from 'lucide-react';
 import ProductCard from './ui/ProductCard';
-import { extractIdFromSlug, isValidSlug, createProductSlug } from '../utils/slugify';
+import { extractIdFromSlug, isValidSlug, createProductSlug, slugify } from '../utils/slugify';
 import { mockProducts } from '../mock/products';
 import { mockCategories } from '../mock/categories';
 
@@ -41,14 +41,14 @@ const ProductsByCategory: React.FC = () => {
   // استخراج categoryId من slug أو id
   const categoryId = useMemo(() => {
     if (slug) {
-      // Try old format first (with ID)
-      if (isValidSlug(slug)) {
-        return extractIdFromSlug(slug).toString();
-      } else {
-        // Try to find by English name (new format)
-        const foundCategory = mockCategories.find(c => c.name_en?.toLowerCase() === slug.toLowerCase());
-        return foundCategory ? foundCategory.id.toString() : null;
+      const decoded = decodeURIComponent(slug);
+      // Support old format (with ID suffix)
+      if (isValidSlug(decoded)) {
+        return extractIdFromSlug(decoded).toString();
       }
+      // New format: match by slugified original name
+      const foundCategory = mockCategories.find(c => slugify(c.name || '') === decoded);
+      return foundCategory ? foundCategory.id.toString() : null;
     }
     return id;
   }, [slug, id]);

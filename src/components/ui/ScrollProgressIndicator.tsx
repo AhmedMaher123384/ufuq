@@ -10,24 +10,60 @@ const ScrollProgressIndicator: React.FC = () => {
   const { t } = useTranslation();
   const [currentSection, setCurrentSection] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [sections, setSections] = useState<Section[]>([]);
 
-  const sections: Section[] = [
-    { id: "hero", name: t('scroll_progress.beginning') },
-    { id: "services", name: t('scroll_progress.why_us') },
-    { id: "clients", name: t('scroll_progress.our_clients') },
-    { id: "our services", name: t('scroll_progress.our_products') },
-    { id: "testimonials", name: t('scroll_progress.client_reviews') },
-    { id: "faq", name: t('scroll_progress.faq') },
-    { id: "contact", name: t('scroll_progress.contact_us') },
-  ];
+  // Build sections dynamically from DOM to match actual page order
+  useEffect(() => {
+    const main = document.querySelector('#main-content') as HTMLElement | null;
+    let nodes: HTMLElement[] = [];
+    if (main) {
+      nodes = Array.from(main.querySelectorAll(':scope > section[data-section]')) as HTMLElement[];
+    } else {
+      nodes = Array.from(document.querySelectorAll('section[data-section]')) as HTMLElement[];
+    }
+
+    // Preserve order while removing duplicates
+    const uniqueIds: string[] = [];
+    nodes.forEach((n) => {
+      const id = n.getAttribute('data-section');
+      if (id && !uniqueIds.includes(id)) {
+        uniqueIds.push(id);
+      }
+    });
+
+    const labelFor = (id: string) => {
+      switch (id) {
+        case 'hero':
+          return t('scroll_progress.beginning', 'البداية');
+        case 'services':
+          return t('about.why_choose_us', 'من نحن');
+        case 'categories':
+          return t('categories.title', 'الخدمات');
+        case 'testimonials':
+          return t('testimonials.title', 'آراء العملاء');
+        case 'clients':
+          return t('clients.title', 'عملاؤنا');
+        case 'faq':
+          return t('faq.title', 'الأسئلة الشائعة');
+        case 'contact':
+          return t('contact.title', 'تواصل معنا');
+        default:
+          return id;
+      }
+    };
+
+    setSections(uniqueIds.map((id) => ({ id, name: labelFor(id) })));
+  }, [t]);
 
   const handleScroll = useCallback(() => {
     const scrollTop = window.scrollY;
     setIsVisible(scrollTop > 200);
 
     let currentSectionIndex = 0;
+    const main = document.querySelector('#main-content') as HTMLElement | null;
     for (let i = 0; i < sections.length; i++) {
-      const element = document.querySelector(`[data-section="${sections[i].id}"]`);
+      const selector = `:scope > section[data-section="${sections[i].id}"]`;
+      const element = main ? main.querySelector(selector) : document.querySelector(`section[data-section="${sections[i].id}"]`);
       if (element) {
         const rect = element.getBoundingClientRect();
         const elementTop = rect.top + scrollTop;
@@ -47,9 +83,10 @@ const ScrollProgressIndicator: React.FC = () => {
 
   const handleSectionClick = useCallback((index: number) => {
     const section = sections[index];
-    const element = 
-      document.querySelector(`#${section.id}`) ||
-      document.querySelector(`[data-section="${section.id}"]`);
+    const main = document.querySelector('#main-content') as HTMLElement | null;
+    const element = main 
+      ? main.querySelector(`:scope > section[data-section="${section.id}"]`) 
+      : document.querySelector(`section[data-section="${section.id}"]`);
     
     element?.scrollIntoView({ 
       behavior: "smooth",
@@ -98,10 +135,13 @@ const ScrollProgressIndicator: React.FC = () => {
         `
       }} />
       {/* Main line */}
-      <div className="relative h-80">
+      <div 
+        className="relative"
+        style={{ height: `${40 + (sections.length * 35)}px` }}
+      >
         <div className="absolute left-2 top-0 w-0.5 h-full bg-gradient-to-b from-[#24a27b] to-[#24a27b]"></div>
         
-        {/* Start point */}
+        {/* Start point (non-interactive) */}
         <div className="absolute left-0.5 top-0 w-4 h-4 active-dot rounded-full"></div>
         
         {/* Middle points */}
