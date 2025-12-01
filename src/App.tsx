@@ -19,6 +19,7 @@ import HeroSection from './components/home/HeroSection';
 import CategoriesSection from './components/home/CategoriesSection';
 import AboutUsSection from './components/home/AboutUsSection';
 import TestimonialsSection from './components/home/TestimonialsSection';
+import ProjectJourneyAchievements from './components/home/ProjectJourneyAchievements';
 import ClientsSection from './components/home/ClientsSection';
 import FAQSection from './components/home/FAQSection';
 import ContactSection from './components/home/ContactSection';
@@ -597,14 +598,15 @@ const App: React.FC = () => {
             categoryProducts={categoryProducts}
           />
         </section>
+        {/* Project Journey & Achievements */}
+        <section data-section="journey-achievements">
+          <ProjectJourneyAchievements />
+        </section>
          <section data-section="testimonials">
           <TestimonialsSection />
         </section>
          {/* Clients Section */}
-        <section data-section="clients">
-          <ClientsSection  />
-        </section>
-        {/* Testimonials Section */}
+     
        
 
     

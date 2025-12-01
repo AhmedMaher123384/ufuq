@@ -33,6 +33,7 @@ import Portfolio from './pages/Portfolio';
 import Blog from './components/Blog';
 import BlogPost from './components/BlogPost';
 import './index.css';
+import AdminReviews from './pages/AdminReviews.tsx';
 
 // تعريف Props لـ ProtectedRoute
 interface ProtectedRouteProps {
@@ -167,6 +168,9 @@ const LayoutWrapper: React.FC = () => {
           
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<Dashboard />} />
+          
+          {/* Reviews Admin */}
+          <Route path="/admin/reviews" element={<AdminReviews />} />
           
          {/* Static Pages Route */}
         </Routes>

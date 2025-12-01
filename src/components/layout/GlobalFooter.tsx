@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaInstagram, FaWhatsapp, FaTwitter, FaFacebookF, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaInstagram, FaWhatsapp, FaFacebookF, FaSnapchatGhost } from 'react-icons/fa';
 import { ArrowUp, Mail, Phone, MapPin } from 'lucide-react';
 import { mockCategories } from '../../mock/categories';
 import { createCategorySlug } from '../../utils/slugify';
 import { useTranslation } from 'react-i18next';
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo2.png";
 import salla from "../../assets/sallalogo.webp";
 import shopify from "../../assets/Shopifylogo.png";
 import wordpress from "../../assets/wordpresslogo.png";
 
 const GlobalFooter: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language?.toLowerCase().startsWith('ar');
   const [showScrollTop, setShowScrollTop] = useState(false);
   const location = useLocation();
   const footerRef = useRef<HTMLDivElement | null>(null);
@@ -43,15 +44,15 @@ const GlobalFooter: React.FC = () => {
 
   const categoriesLinks = mockCategories.map((c) => ({
     to: `/service/${createCategorySlug(c.id, c.name)}`,
-    label: c.name_ar || c.name,
+    label: isRTL ? (c.name_ar || c.name) : c.name,
   }));
 
   const quickLinks = [
     { name: t('footer.home'), to: "/" },
     { name: t('footer.our_work'), to: "/portfolio" },
     { name: t('footer.blog'), to: "/blog" },
-    { name: "اتصل بنا", to: "/contact" },
-    { name: "الخدمات", to: "/services" },
+    { name: t('footer.contact_us'), to: "/contact" },
+    { name: t('footer.products'), to: "/services" },
   ];
 
   return (
@@ -94,14 +95,12 @@ const GlobalFooter: React.FC = () => {
                 <a href="/" className="inline-block">
                   <img src={logo} alt="UfuqDigital" className="w-32 md:w-40 h-auto hover:scale-105 transition-transform duration-300 mx-auto md:mx-0" />
                 </a>
-                <div className="flex justify-center md:justify-end gap-3">
+                <div className="flex justify-end gap-3 flex-row-reverse">
                   {[
-                    { href: "https://www.instagram.com/UfuqDigitalcom", icon: FaInstagram },
-                    { href: "https://wa.me/966543098895", icon: FaWhatsapp },
-                    { href: "https://x.com/UfuqDigitalcom", icon: FaTwitter },
+                    { href: "https://www.instagram.com/ufuqdigital/?utm_source=qr&igsh=MTk5ZTlkZXl4ZGNmOA%3D%3D#", icon: FaInstagram },
+                    { href: "https://www.snapchat.com/@ufuqdigital?share_id=IrYR7CBgmec&locale=en-US", icon: FaSnapchatGhost },
                     { href: "https://www.facebook.com/UfuqDigitalcom", icon: FaFacebookF },
-                    { href: "mailto:info@UfuqDigital.com", icon: FaEnvelope },
-                    { href: "tel:+966543098895", icon: FaPhone },
+                    { href: "https://wa.me/966543098895", icon: FaWhatsapp },
                   ].map((s, i) => (
                     <a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
                        className="w-9 h-9 bg-[#25252f] border border-[#2a2a35] rounded-xl flex items-center justify-center hover:border-[#8F93A5] hover:bg-[#2a2a35] hover:scale-110 transition-all duration-300">
@@ -113,7 +112,7 @@ const GlobalFooter: React.FC = () => {
 
               {/* Services */}
               <div>
-                <h4 className="text-base md:text-lg font-bold text-[#8F93A5] mb-3">خدماتنا</h4>
+                <h4 className="text-base md:text-lg font-bold text-[#8F93A5] mb-3">{isRTL ?'خدماتنا' : 'Services'}</h4>
                 <div className="space-y-1.5">
                   {categoriesLinks.map((link, i) => (
                     <Link key={i} to={link.to} className="block text-white/60 hover:text-[#8F93A5] text-xs md:text-sm transition-colors">
@@ -141,7 +140,7 @@ const GlobalFooter: React.FC = () => {
                 <div>
                   <h4 className="text-base md:text-lg font-bold text-[#8F93A5] mb-3">{t('footer.contact_us')}</h4>
                   <div className="space-y-2 text-white/60 text-xs md:text-sm">
-                    <div className="flex items-center justify-center md:justify-end gap-2">
+                    <div className="flex items-center gap-2 text-right" dir="rtl">
                       <MapPin className="w-4 h-4 text-[#8F93A5]" />
                       <span>{t('footer.location')}</span>
                     </div>

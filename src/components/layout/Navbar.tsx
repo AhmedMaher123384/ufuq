@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { smartToast } from '../../utils/toastConfig';
 import { Menu, X, Search, Package, Settings, Phone, Mail, MapPin, Clock, ChevronDown, Home, Grid3X3, Star, Award, Truck, Shield, Sparkles, Bell, ChevronLeft, BookOpen, Crown } from 'lucide-react';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo2.png';
 // import AuthModal from '../modals/AuthModal';
 // import CartDropdown from '../ui/CartDropdown';
 import LiveSearch from '../ui/LiveSearch';
@@ -718,13 +718,17 @@ function Navbar() {
                 {/* Mobile Cart Button removed per mock-data requirement */}
               </div>
               {/* Logo */}
-              <div className="flex items-center">
-                <Link to="/" onClick={() => setIsMenuOpen(false)} className="cursor-pointer">
-                  <img src={logo} alt="Logo" className="h-14 sm:h-16 w-auto" />
-                </Link>
-              </div>
-              {/* Desktop Navigation Links - Exact order: Home, Services, first 3 categories, Contact */}
-              <div className="hidden lg:flex items-center space-x-1">
+            <div className="flex items-center">
+              <Link to="/" onClick={() => setIsMenuOpen(false)} className="cursor-pointer">
+                <img src={logo} alt="Logo" className="h-14 sm:h-16 w-auto" />
+              </Link>
+            </div>
+            {/* Mobile Language Selector (outside the menu) */}
+            <div className="flex items-center lg:hidden">
+              <LanguageSelector />
+            </div>
+            {/* Desktop Navigation Links - Exact order: Home, Services, first 3 categories, Contact */}
+            <div className="hidden lg:flex items-center space-x-1">
                 {/* Home */}
                 <Link
                   key="nav-home"
@@ -758,7 +762,7 @@ function Navbar() {
                       onClick={() => setIsMenuOpen(false)}
                       className={`relative px-3 py-2 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-all duration-300 text-sm`}
                     >
-                      {(c as any).name_ar || c.name}
+                      {isRTL ? ((c as any).name_ar || c.name) : c.name}
                     </Link>
                   ))
                 )}
@@ -845,7 +849,6 @@ function Navbar() {
           </div>
           <div className="space-y-3.5">
             <LiveSearch />
-            <LanguageSelector />
           </div>
         </div>
 
@@ -864,7 +867,7 @@ function Navbar() {
               { name: t('nav.categories'), href: '/services', icon: Package, color: '#f59e0b' },
               ...((categories && categories.length > 0)
                 ? categories.slice(0, 3).map((c) => ({
-                    name: c.name,
+                    name: isRTL ? ((c as any).name_ar || c.name) : c.name,
                     href: `/service/${createCategorySlug(c.id, c.name)}`,
                     icon: Grid3X3,
                     color: '#3b82f6'

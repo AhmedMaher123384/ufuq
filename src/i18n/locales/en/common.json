@@ -55,7 +55,7 @@
     "search_and_settings": "Search & Settings",
     "categories": "our services",
     "theme_malak": "Theme Malak",
-    "our_work": "Our Work",
+    "our_work": "portfolio",
     "blog": "Blog"
   },
   "currency": {
@@ -74,7 +74,7 @@
       "contact_us": "Contact Us",
       "titlePart1": "coding your next",
       "titlePart11": "chapter with",
-      "titlePart2": "Fassla",
+      "titlePart2": " ",
       "subtitle": "Every solution we create is driven by passion, crafted with care, and delivered with purpose. Because behind every challenge, there's a story waiting to become a success."
     },
     "faq": {
@@ -118,7 +118,7 @@
     },
     "about": {
       "main_title": "Ufuq Digital",
-      "main_description": "We are a specialized team dedicated to providing the best services and products to our valued customers",
+      "main_description": "Ufuq Digital is a company specialized in delivering integrated digital solutions that help businesses and online stores across various sectors launch confidently and build a strong market presence.\n\nWe develop your website or online store with high professionalism — whether fully custom-built or on leading platforms — with modern designs and a smooth, fast user experience.\n\nWe also provide iOS and Android app development, in addition to managing paid advertising campaigns across all social platforms and Google Search, and performance analytics to ensure the best results.\n\nWe care about your brand’s success identity as well, by designing complete visual identities, managing social media accounts, and producing professional content that reflects brand strength and attracts customers.\n\nUfuq Digital... you bring the idea, and we handle the execution.",
       "what_we_offer": "What We Offer",
       "what_we_offer_description": "We provide a diverse range of high-quality services and products",
       "start_now": "Start Now",
@@ -162,7 +162,7 @@
         "years_experience": "Years Experience",
         "technical_support": "Technical Support"
       },
-      "project_journey": "Your Project Journey",
+      "project_journey": "Your Success Journey",
       "project_journey_description": "We follow a clear methodology to ensure your project's success",
       "steps": {
         "discovery": "Discovery",
@@ -390,7 +390,7 @@
     "scroll_up": "Scroll Up"
   },
   "categories": {
-    "title": "Our Categories",
+    "title": "Our ser",
     "subtitle": "Discover a wide range of products and services",
     "featured_products": "Featured Products",
     "discover_product": "Discover Product",
@@ -501,19 +501,19 @@
     "important_links": "Important Links",
     "quick_links": "Quick Links",
     "home": "Home",
-    "products": "Products",
+    "products": "services",
     "about_us": "About Us",
     "contact_us": "Contact Us",
     "privacy_policy": "Privacy Policy",
     "terms_conditions": "Terms & Conditions",
-    "our_work": "Our Work",
+    "our_work": "portfolio",
     "blog": "Blog",
     "partners": "Our Partners",
     "partners_salla": "Our Partners - Salla",
     "partners_shopify": "Our Partners - Shopify",
     "partners_wordpress": "Our Partners - WordPress",
     "scroll_to_top": "Scroll to Top",
-    "tax_number": "Tax Number: 067-347541",
+    "tax_number": "Tax Number: 35-2930287",
     "copyright": "© 2024 UfuqDigital. All rights reserved",
     "location": "Riyadh, Saudi Arabia"
   },
@@ -788,7 +788,7 @@
       },
       "quality": {
         "title": "Quality",
-        "description": "We are committed to the highest quality standards in every detail of our work"
+        "description": "We are committed to the highest quality standards in every detail of portfolio"
       },
       "collaboration": {
         "title": "Collaboration",

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Phone, Mail, MapPin, Clock, MessageSquare, Send, CheckCircle } from 'lucide-react';
-import { FaInstagram, FaWhatsapp, FaTwitter, FaFacebookF, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaInstagram, FaWhatsapp, FaFacebookF, FaSnapchatGhost } from 'react-icons/fa';
 
 const Contact: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -482,7 +482,7 @@ const Contact: React.FC = () => {
           </h3>
           <div className="flex justify-center items-center gap-3 sm:gap-4 mb-6 sm:mb-8 flex-wrap">
             <a
-              href="https://www.instagram.com/UfuqDigitalcom"
+              href="https://www.instagram.com/ufuqdigital/?utm_source=qr&igsh=MTk5ZTlkZXl4ZGNmOA%3D%3D#"
               target="_blank"
               rel="noopener noreferrer"
               className="social-icon group relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#8F93A5]/20 to-[#8F93A5]/5 border border-[#8F93A5]/30 rounded-lg sm:rounded-xl flex items-center justify-center hover:border-[#8F93A5] hover:bg-[#8F93A5]/10 transition-all duration-400 ultra-smooth gpu"
@@ -498,14 +498,6 @@ const Contact: React.FC = () => {
               <FaWhatsapp className="w-5 h-5 sm:w-6 sm:h-6 text-[#8F93A5] group-hover:text-white transition-colors duration-300" />
             </a>
             <a
-              href="https://x.com/UfuqDigitalcom"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-icon group relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#8F93A5]/20 to-[#8F93A5]/5 border border-[#8F93A5]/30 rounded-lg sm:rounded-xl flex items-center justify-center hover:border-[#8F93A5] hover:bg-[#8F93A5]/10 transition-all duration-400 ultra-smooth gpu"
-            >
-              <FaTwitter className="w-5 h-5 sm:w-6 sm:h-6 text-[#8F93A5] group-hover:text-white transition-colors duration-300" />
-            </a>
-            <a
               href="https://www.facebook.com/UfuqDigitalcom"
               target="_blank"
               rel="noopener noreferrer"
@@ -514,16 +506,12 @@ const Contact: React.FC = () => {
               <FaFacebookF className="w-5 h-5 sm:w-6 sm:h-6 text-[#8F93A5] group-hover:text-white transition-colors duration-300" />
             </a>
             <a
-              href="mailto:info@UfuqDigital.com"
+              href="https://www.snapchat.com/@ufuqdigital?share_id=IrYR7CBgmec&locale=en-US"
+              target="_blank"
+              rel="noopener noreferrer"
               className="social-icon group relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#8F93A5]/20 to-[#8F93A5]/5 border border-[#8F93A5]/30 rounded-lg sm:rounded-xl flex items-center justify-center hover:border-[#8F93A5] hover:bg-[#8F93A5]/10 transition-all duration-400 ultra-smooth gpu"
             >
-              <FaEnvelope className="w-5 h-5 sm:w-6 sm:h-6 text-[#8F93A5] group-hover:text-white transition-colors duration-300" />
-            </a>
-            <a
-              href="tel:+966543098895"
-              className="social-icon group relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#8F93A5]/20 to-[#8F93A5]/5 border border-[#8F93A5]/30 rounded-lg sm:rounded-xl flex items-center justify-center hover:border-[#8F93A5] hover:bg-[#8F93A5]/10 transition-all duration-400 ultra-smooth gpu"
-            >
-              <FaPhone className="w-5 h-5 sm:w-6 sm:h-6 text-[#8F93A5] group-hover:text-white transition-colors duration-300" />
+              <FaSnapchatGhost className="w-5 h-5 sm:w-6 sm:h-6 text-[#8F93A5] group-hover:text-white transition-colors duration-300" />
             </a>
           </div>
           <p className="text-[#ffffff]/70 text-base sm:text-lg">
@@ -534,9 +522,9 @@ const Contact: React.FC = () => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-            }}>UfuqDigital</span> - وكالة سعودية للمنتجات الرقمية
+            }}>UfuqDigital</span> -            {isRTL ? ' شركة للمنتجات الرقمية' : 'Digital Products Company'}
           </p>
-          <p className="text-[#ffffff]/70 mt-2 text-sm sm:text-base">نشارككم الابتكار والتميز</p>
+          <p className="text-[#ffffff]/70 mt-2 text-sm sm:text-base">{isRTL ? 'نشارككم الابتكار والتميز' : 'We share innovation and excellence with you'}</p>
         </div>
       </div>
     </div>

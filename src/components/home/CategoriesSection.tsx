@@ -367,9 +367,7 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({ categoryProducts,
                 {t('home.categories.title')}
               </span>
             </h2>
-            <p className="text-base md:text-lg text-[#ffffff]/70 mt-4 max-w-xl mx-auto">
-              {t('home.categories.subtitle')}
-            </p>
+           
           </div>
 
           {/* Services List */}
@@ -386,6 +384,12 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({ categoryProducts,
                   ref={el => refs.current[i] = el}
                   className="opacity-0 gpu service-item group"
                 >
+                  {/* Mobile full-card clickable overlay */}
+                  <Link
+                    to={link}
+                    aria-label={t('categories.explore_category', { name })}
+                    className="absolute inset-0 z-30 lg:hidden"
+                  />
                   {/* الرقم التسلسلي */}
                   <div className="service-number">{String(i + 1).padStart(2, '0')}.</div>
 

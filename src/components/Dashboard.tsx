@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { signOut, onAuthStateChanged, User, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebase';
 import { formSubmissionService, FormSubmission } from '../services/formSubmissionService';
@@ -20,6 +21,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isRTL = false }) => {
   const [selectedSubmission, setSelectedSubmission] = useState<FormSubmission | null>(null);
   const [sortMode, setSortMode] = useState<'smart' | 'date_desc' | 'date_asc' | 'priority_desc' | 'name_asc' | 'status'>('date_desc');
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   // Simple local authentication gate
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -217,20 +219,27 @@ const Dashboard: React.FC<DashboardProps> = ({ isRTL = false }) => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent"
             >
-              Welcome to the Creative Hub
-            </motion.h1>
+Ufuq Digital Dashboard            </motion.h1>
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-white/80 text-lg font-medium"
             >
-              {isRTL ? 'مرحباً بك في عالم الإبداع' : 'Ufuq Digital Dashboard'}
             </motion.div>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Tiny Reviews Button (Top) */}
+        <div className="flex justify-end mb-3">
+          <Link
+            to="/admin/reviews"
+            className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] leading-none bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white border border-emerald-500/40 shadow-sm"
+          >
+            {isRTL ? 'صفحة التقييمات' : 'Reviews'}
+          </Link>
+        </div>
         {!isAuthenticated ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -396,8 +405,6 @@ const Dashboard: React.FC<DashboardProps> = ({ isRTL = false }) => {
                 onChange={(e) => setSortMode(e.target.value as any)}
                 className="w-full bg-emerald-950/30 border border-emerald-800/30 rounded-xl px-3 py-2 text-white placeholder-white/50 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500 focus:outline-none transition-all duration-300 backdrop-blur-xl"
               >
-                <option value="smart" className="bg-slate-800">{isRTL ? 'ترتيب ذكي' : 'Smart'}</option>
-                <option value="priority_desc" className="bg-slate-800">{isRTL ? 'حسب الأولوية' : 'Priority'}</option>
                 <option value="date_desc" className="bg-slate-800">{isRTL ? 'الأحدث أولاً' : 'Newest'}</option>
                 <option value="date_asc" className="bg-slate-800">{isRTL ? 'الأقدم أولاً' : 'Oldest'}</option>
                 <option value="name_asc" className="bg-slate-800">{isRTL ? 'الاسم (أ-ي)' : 'Name (A-Z)'}</option>
@@ -408,15 +415,17 @@ const Dashboard: React.FC<DashboardProps> = ({ isRTL = false }) => {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={loadSubmissions}
-                className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-3 py-2 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/20 transition-all duration-300"
+                onClick={() => { setIsRefreshing(true); window.location.reload(); }}
+                disabled={isRefreshing}
+                className={`w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-3 py-2 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/20 transition-all duration-300 ${isRefreshing ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
-                <FiRefreshCw className="text-base" />
+                <FiRefreshCw className={`text-base ${isRefreshing ? 'animate-spin' : ''}`} />
                 {isRTL ? 'تحديث' : 'Refresh'}
               </motion.button>
             </div>
           </div>
         </motion.div>
+
 
         {/* Customer Orders - Modern Cards */}
         <motion.div 
@@ -569,34 +578,47 @@ const Dashboard: React.FC<DashboardProps> = ({ isRTL = false }) => {
                       </motion.button>
                       <AnimatePresence>
                         {confirmDeleteId === submission.id && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 8 }}
-                            className="absolute -top-2 left-1/2 -translate-x-1/2 -translate-y-full w-64 bg-neutral-900 border border-red-500/40 rounded-xl shadow-2xl p-3 z-10"
-                          >
-                            <p className="text-white text-sm mb-3 text-center">
-                              {isRTL ? 'تأكيد الحذف؟' : 'Confirm delete?'}
-                            </p>
-                            <div className="flex gap-2">
-                              <motion.button
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => handleDelete(submission.id!)}
-                                className="flex-1 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white px-3 py-2 rounded-lg font-semibold text-sm border border-red-500/50"
-                              >
-                                {isRTL ? 'امسح' : 'Delete'}
-                              </motion.button>
-                              <motion.button
-                                whileHover={{ scale: 1.03 }}
-                                whileTap={{ scale: 0.97 }}
-                                onClick={() => setConfirmDeleteId(null)}
-                                className="flex-1 bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-semibold text-sm border border-white/30"
-                              >
-                                {isRTL ? 'إلغاء' : 'Cancel'}
-                              </motion.button>
-                            </div>
-                          </motion.div>
+                          <>
+                            {/* Backdrop */}
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+                              onClick={() => setConfirmDeleteId(null)}
+                            />
+                            {/* Centered Confirm Dialog */}
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.96 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.96 }}
+                              className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                            >
+                              <div className="w-72 bg-neutral-900 border border-red-500/40 rounded-xl shadow-2xl p-4">
+                                <p className="text-white text-sm mb-3 text-center">
+                                  {isRTL ? 'تأكيد الحذف؟' : 'Confirm delete?'}
+                                </p>
+                                <div className="flex gap-2">
+                                  <motion.button
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.97 }}
+                                    onClick={() => handleDelete(submission.id!)}
+                                    className="flex-1 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white px-3 py-2 rounded-lg font-semibold text-sm border border-red-500/50"
+                                  >
+                                    {isRTL ? 'امسح' : 'Delete'}
+                                  </motion.button>
+                                  <motion.button
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.97 }}
+                                    onClick={() => setConfirmDeleteId(null)}
+                                    className="flex-1 bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg font-semibold text-sm border border-white/30"
+                                  >
+                                    {isRTL ? 'إلغاء' : 'Cancel'}
+                                  </motion.button>
+                                </div>
+                              </div>
+                            </motion.div>
+                          </>
                         )}
                       </AnimatePresence>
                     </div>

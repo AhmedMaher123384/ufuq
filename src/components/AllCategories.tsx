@@ -182,7 +182,7 @@ const AllCategories: React.FC = () => {
                             group-hover:text-[#8F93A5] transition-colors duration-300">
                 {getLocalizedContent(category, 'name')}
               </h3>
-              <p className="text-[#ffffff]/85 text-base leading-relaxed line-clamp-2">
+              <p className="text-[#ffffff]/85 text-base leading-relaxed line-clamp-2 whitespace-pre-line">
                 {getLocalizedContent(category, 'description') || t('categories.default_description')}
               </p>
             </div>
@@ -235,7 +235,7 @@ const AllCategories: React.FC = () => {
                           group-hover:text-[#8F93A5] transition-colors duration-300">
               {getLocalizedContent(category, 'name')}
             </h3>
-            <p className="text-[#ffffff]/85 text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-5 mb-3 sm:mb-4">
+            <p className="text-[#ffffff]/85 text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-5 mb-3 sm:mb-4 whitespace-pre-line">
               {getLocalizedContent(category, 'description') || t('categories.default_description')}
             </p>
             <div className="flex items-center justify-between">

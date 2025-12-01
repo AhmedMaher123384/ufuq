@@ -11,7 +11,6 @@ const AboutUsSection = () => {
 
   const aboutInView = useInView(aboutRef, { once: true, amount: 0.2 });
 
-  const whatWeDoItems = (t('home.about.services', { returnObjects: true }) as string[]) || [];
 
 
 
@@ -62,28 +61,13 @@ const AboutUsSection = () => {
                 </span>
               </h1>
               
-              <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-white/70 leading-relaxed whitespace-pre-line">
                 {t('home.about.main_description')}
               </p>
               
               <div className="pt-1">
-                <h3 className="text-base sm:text-lg md:text-xl font-bold text-[#8F93A5] mb-2 md:mb-3">
-                  {t('home.about.what_we_offer')}
-                </h3>
-                <ul className="space-y-1.5 md:space-y-2">
-                  {whatWeDoItems.map((item, i) => (
-                    <motion.li 
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={aboutInView ? { opacity: 1, x: 0 } : {}}
-                      transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-                      className="flex items-start gap-2 md:gap-3 text-white/80 text-xs sm:text-sm md:text-base"
-                    >
-                      <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-[#8F93A5] rounded-full mt-1.5 md:mt-2 flex-shrink-0"></div>
-                      <span className="leading-relaxed">{item}</span>
-                    </motion.li>
-                  ))}
-                </ul>
+               
+             
               </div>
             </motion.div>
           </div>

@@ -124,7 +124,7 @@ const CustomCursor = () => {
         console.warn('CustomCursor: Failed to remove event listeners', error);
       }
     };
-  }, [shouldHideCursor, location.pathname]);
+  }, [shouldHideCursor, location.pathname, isMobile]);
 
   // Return null after all hooks have been called
   if (shouldHideCursor || isMobile) {

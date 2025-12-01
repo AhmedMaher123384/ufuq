@@ -66,17 +66,9 @@ export const resources = {
           newsletter_placeholder: "أدخل بريدك الإلكتروني",
           newsletter_button: "اشتراك",
           about: {
-            main_title: " افق الرقمية ",
-            main_description: "نحن فريق متخصص في تقديم أفضل الخدمات والخدمات لعملائنا الكرام",
-            what_we_offer: "ما نقدمه",
-            what_we_offer_description: "نقدم مجموعة متنوعة من الخدمات والخدمات عالية الجودة",
-            services: [
-              "تصميم وتطوير المواقع الإلكترونية",
-              "التسويق الرقمي وإدارة وسائل التواصل الاجتماعي",
-              "تطوير تطبيقات الهاتف المحمول",
-              "الهوية البصرية والتصميم الجرافيكي",
-              "استشارات تقنية متخصصة",
-            ],
+            main_title: "أفق الرقمية",
+            main_description: "أفق الرقمية هي شركة متخصصة في تقديم حلول رقمية متكاملة تساعد الشركات والمتاجر الالكترونية في مختلف الانشطة على الانطلاق بثبات وتحقيق حضور قوي في السوق.\n\nنطوّر لك موقعك الإلكتروني أو متجرك باحترافية عالية سواء برمجة خاصة بالكامل أو عبر أقوى المنصات مع تصميمات عصرية وتجربة استخدام سلسة وسريعة.\n\nكما نقدّم خدمات تطوير تطبيقات iOS وAndroid، بالإضافة إلى إدارة الحملات الإعلانية الممولة على جميع منصات التواصل ومحرك البحث جوجل، وتحليل الأداء لضمان أفضل النتائج.\n\nنهتم أيضًا بهوية نجاحك من خلال تصميم الهوية البصرية كاملة، وإدارة حسابات السوشيال ميديا، وصناعة محتوى احترافي يعكس قوة العلامة التجارية ويجذب العملاء.\n\nأفق الرقمية… الفكرة عليك، والتنفيذ علينا.",
+           
             features: {
               expert_team: "فريق خبير",
               expert_team_desc: "فريق من المتخصصين ذوي الخبرة العالية",
@@ -104,14 +96,14 @@ export const resources = {
               "نقدم حلولاً مبتكرة تناسب احتياجاتك الخاصة"
             ],
             stats: {
-              number_countries: "نعمل في 3 دول عربية ",
+              number_countries: "نقدّم خدماتنا في دولة أجنبية وثلاث دول عربية ",
               completed_projects: "مشروع مكتمل",
               satisfied_clients: "عميل راضٍ",
               years_experience: "سنوات خبرة",
               technical_support: "دعم فني"
             },
-            project_journey: "رحلة مشروعك",
-            project_journey_description: "نتبع منهجية واضحة لضمان نجاح مشروعك",
+            project_journey: "رحلة نجاحك",
+            project_journey_description: "نتبع منهجية واضحة لضمان نجاح نجاحك",
             steps: {
               discovery: "الاستكشاف",
               discovery_desc: "فهم احتياجاتك وأهدافك",
@@ -536,7 +528,7 @@ export const resources = {
               years_experience: "Years Experience",
               technical_support: "Technical Support"
             },
-            project_journey: "Your Project Journey",
+            project_journey: "Your Success Journey",
             project_journey_description: "We follow a clear methodology to ensure your project's success",
             steps: {
               discovery: "Discovery",

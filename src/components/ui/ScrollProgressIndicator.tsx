@@ -7,10 +7,11 @@ interface Section {
 }
 
 const ScrollProgressIndicator: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
   const [currentSection, setCurrentSection] = useState<number>(0);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [sections, setSections] = useState<Section[]>([]);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   // Build sections dynamically from DOM to match actual page order
   useEffect(() => {
@@ -36,11 +37,13 @@ const ScrollProgressIndicator: React.FC = () => {
         case 'hero':
           return t('scroll_progress.beginning', 'البداية');
         case 'services':
-          return t('about.why_choose_us', 'من نحن');
+          return isRTL ? 'من نحن' : 'About Us';
         case 'categories':
-          return t('categories.title', 'الخدمات');
+          return isRTL ? 'خدماتنا' : 'Our services';
+        case 'journey-achievements':
+          return t('home.about.project_journey', 'رحلة نجاحك');
         case 'testimonials':
-          return t('testimonials.title', 'آراء العملاء');
+          return t('testimonials.title', 'رحلة نجاحك');
         case 'clients':
           return t('clients.title', 'عملاؤنا');
         case 'faq':
@@ -57,7 +60,6 @@ const ScrollProgressIndicator: React.FC = () => {
 
   const handleScroll = useCallback(() => {
     const scrollTop = window.scrollY;
-    setIsVisible(scrollTop > 200);
 
     let currentSectionIndex = 0;
     const main = document.querySelector('#main-content') as HTMLElement | null;
@@ -73,6 +75,19 @@ const ScrollProgressIndicator: React.FC = () => {
       }
     }
     setCurrentSection(currentSectionIndex);
+
+    // Control visibility: hide indicator while hero section is in view
+    const hero = main 
+      ? main.querySelector(':scope > section[data-section="hero"]') 
+      : document.querySelector('section[data-section="hero"]');
+    if (hero) {
+      const rect = hero.getBoundingClientRect();
+      // Show only after hero is mostly out of view
+      setIsVisible(rect.bottom <= 100);
+    } else {
+      // Fallback: show after slight scroll
+      setIsVisible(scrollTop > 100);
+    }
   }, [sections]);
 
   useEffect(() => {
@@ -94,10 +109,10 @@ const ScrollProgressIndicator: React.FC = () => {
     });
   }, [sections]);
 
-  if (!isVisible) return null;
+  // المؤشر يظهر فقط بعد تجاوز الهيرو
 
   return (
-    <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:block">
+    <div className={`fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:block ${isVisible ? '' : 'opacity-0 pointer-events-none'}`}>
       <style dangerouslySetInnerHTML={{
         __html: `
           @keyframes whatsapp-glow {

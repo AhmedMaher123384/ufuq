@@ -45,8 +45,7 @@ export const mockTestimonials: MockTestimonial[] = [
     position_ar: 'صاحب محل عطور في الدمام',
     position_en: 'Perfume shop owner in Dammam',
     testimonial_ar:
-      "الموقع يفتح بسرعة حتى على النت الضعيف، والزبائن يقولون: 'أخيرًا موقع ما يعلّق!'. الله يوفقكم.",
-    testimonial_en:
+"الموقع صار يفتح بسرعه حتى مع النت الضعيف، وما عاد نسمع أحد يشتكي إنه يعلّق. يعطيكم العافيه.",    testimonial_en:
       'The site loads fast even on weak internet. Customers say: “Finally, a site that doesn’t freeze!” Keep it up.',
     image:
       'https://c8.alamy.com/comp/2E235X1/full-length-profile-shot-of-a-saudi-arab-man-wearing-a-thobe-and-pushing-a-hand-truck-with-a-tires-isolated-on-white-background-2E235X1.jpg',

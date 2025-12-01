@@ -691,3 +691,25 @@ code {
 .animate-shimmerWave {
   animation: shimmerWave 1.5s ease-in-out infinite;
 }
+/* Utilities for review cards text clamping to improve mobile layout */
+.review-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* single column on mobile: allow more lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  hyphens: auto;
+  word-break: break-word;
+}
+
+@media (min-width: 640px) {
+  .review-clamp {
+    -webkit-line-clamp: 4; /* slightly more room on desktop */
+  }
+}
+
+.review-clamp--none {
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: visible;
+}

@@ -37,93 +37,95 @@ const HeroSection: React.FC = () => {
         decoding="async"
       />
 
-      {/* Sidebars — LEFT (Contact Info) */}
-      <div className="absolute left-8 top-1/2 -translate-y-1/2 z-20 hidden lg:flex">
-        <div className="relative pr-8 flex flex-col items-end space-y-6">
-          <a 
-            href="tel:+966543098895" 
-            className="text-white text-sm font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-            dir="ltr"
-          >
-            +966 54 309 8895
-          </a>
-          <span 
-            className="text-white text-sm font-light tracking-wider"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            |
-          </span> 
-          <a 
-            href="mailto:info@UfuqDigital.com 
-" 
-            className="text-white text-sm font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            info@UfuqDigital.com 
-          </a> 
-        </div>
-        <div className="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
-      </div>
+      {/*
+        Sidebars — LEFT (Contact Info) and RIGHT (Social Links) commented out per request
 
-      {/* Sidebars — RIGHT (Social Links) */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 z-20 hidden lg:flex">
-        <div className="relative pl-8 flex flex-col items-start space-y-6">
-          <a 
-            href="https://wa.me/966543098895" 
-            className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            WhatsApp
-          </a>
-          <span 
-            className="text-white text-xs font-light tracking-wider"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            |
-          </span> 
-          <a 
-            href="https://www.linkedin.com/" 
-            className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            LinkedIn
-          </a>
-          <span 
-            className="text-white text-xs font-light tracking-wider"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            |
-          </span> 
-          <a 
-            href="https://www.instagram.com/" 
-            className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            Instagram
-          </a>
-          <span 
-            className="text-white text-xs font-light tracking-wider"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            |
-          </span> 
-          <a 
-            href="https://www.facebook.com/" 
-            className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            Facebook
-          </a>
-          <span 
-            className="text-white text-xs font-medium tracking-wider mt-4" 
-            style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-          >
-            Follow Us —
-          </span>
+        <div className="absolute left-8 top-1/2 -translate-y-1/2 z-20 hidden lg:flex">
+          <div className="relative pr-8 flex flex-col items-end space-y-6">
+            <a 
+              href="tel:+966543098895" 
+              className="text-white text-sm font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+              dir="ltr"
+            >
+              +966 54 309 8895
+            </a>
+            <span 
+              className="text-white text-sm font-light tracking-wider"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              |
+            </span> 
+            <a  
+              href="mailto:info@UfuqDigital.com 
+" 
+              className="text-white text-sm font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              info@UfuqDigital.com 
+            </a> 
+          </div>
+          <div className="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
         </div>
-        <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
-      </div>
+
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 z-20 hidden lg:flex">
+          <div className="relative pl-8 flex flex-col items-start space-y-6">
+            <a 
+              href="https://wa.me/966543098895" 
+              className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              WhatsApp
+            </a>
+            <span 
+              className="text-white text-xs font-light tracking-wider"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              |
+            </span> 
+            <a 
+              href="https://www.snapchat.com/@ufuqdigital?share_id=IrYR7CBgmec&locale=en-US" 
+              className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              Snapchat
+            </a>
+            <span 
+              className="text-white text-xs font-light tracking-wider"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              |
+            </span> 
+            <a 
+              href="https://www.instagram.com/ufuqdigital/?utm_source=qr&igsh=MTk5ZTlkZXl4ZGNmOA%3D%3D#" 
+              className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              Instagram
+            </a>
+            <span 
+              className="text-white text-xs font-light tracking-wider"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              |
+            </span> 
+            <a 
+              href="https://www.facebook.com/UfuqDigitalcom" 
+              className="text-white text-xs font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              Facebook
+            </a>
+            <span 
+              className="text-white text-xs font-medium tracking-wider mt-4" 
+              style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+            >
+              Follow Us —
+            </span>
+          </div>
+          <div className="absolute left-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
+        </div>
+      */}
 
       {/* Main Content - الموبايل زي ما هو، والديسكتوب تحت سيطرتك */}
 <div className="relative z-10 h-full w-full">
