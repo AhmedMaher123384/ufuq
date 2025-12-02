@@ -5,7 +5,7 @@ import { ArrowUp, Mail, Phone, MapPin } from 'lucide-react';
 import { mockCategories } from '../../mock/categories';
 import { createCategorySlug } from '../../utils/slugify';
 import { useTranslation } from 'react-i18next';
-import logo from "../../assets/logo2.png";
+import logo from "../../assets/logo.png";
 import salla from "../../assets/sallalogo.webp";
 import shopify from "../../assets/Shopifylogo.png";
 import wordpress from "../../assets/wordpresslogo.png";
@@ -140,7 +140,7 @@ const GlobalFooter: React.FC = () => {
                 <div>
                   <h4 className="text-base md:text-lg font-bold text-[#8F93A5] mb-3">{t('footer.contact_us')}</h4>
                   <div className="space-y-2 text-white/60 text-xs md:text-sm">
-                    <div className="flex items-center gap-2 text-right" dir="rtl">
+                    <div className="flex items-center justify-center md:justify-end gap-2">
                       <MapPin className="w-4 h-4 text-[#8F93A5]" />
                       <span>{t('footer.location')}</span>
                     </div>

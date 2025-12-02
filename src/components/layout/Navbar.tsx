@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { smartToast } from '../../utils/toastConfig';
 import { Menu, X, Search, Package, Settings, Phone, Mail, MapPin, Clock, ChevronDown, Home, Grid3X3, Star, Award, Truck, Shield, Sparkles, Bell, ChevronLeft, BookOpen, Crown } from 'lucide-react';
-import logo from '../../assets/logo2.png';
+import logo from '../../assets/logo.png';
 // import AuthModal from '../modals/AuthModal';
 // import CartDropdown from '../ui/CartDropdown';
 import LiveSearch from '../ui/LiveSearch';

@@ -832,7 +832,7 @@ const CategoryPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile: image → text (unchanged) */}
+        {/* Mobile: image → text */}
         <div className="lg:hidden space-y-6 mb-12">
           <div className="flex justify-center">
             <img 
@@ -841,13 +841,17 @@ const CategoryPage: React.FC = () => {
               className="rounded-xl shadow-lg max-w-full border border-white/10 w-full max-h-56 object-cover"
             />
           </div>
-          <div className="space-y-3 text-center px-2">
+          <div className="space-y-4">
             <p className="text-sm text-white/90 leading-relaxed whitespace-pre-line">
               {isRTL
                 ? (category.description_ar || 'خدمة احترافية بأفضل الأسعار وأسرع تنفيذ')
-                : (category.description_en || 'Professional service at the best prices and fast delivery')}
+                : (category.description || 'Professional service at the best prices and fast delivery')}
             </p>
-            <p className="text-sm text-[#8F93A5]/80">املأ النموذج وسيتواصل معك فريقنا خلال دقائق</p>
+            <p className="text-base text-[#8F93A5]/80">
+              {isRTL 
+                ? 'املأ النموذج وسيتواصل معك فريقنا خلال دقائق' 
+                : 'Fill out the form and our team will contact you within minutes'}
+            </p>
           </div>
         </div>
 
@@ -895,6 +899,24 @@ const CategoryPage: React.FC = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Mobile CTA — inline above reviews */}
+        {!isFormExpanded && (
+          <div className="lg:hidden flex justify-center mt-6 mb-8">
+            <button
+              onClick={() => {
+                setIsFormExpanded(true);
+                setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+              }}
+              className="group px-6 py-2.5 bg-gradient-to-r from-[#A0A5C0]/80 to-[#7A7E95]/80 text-white text-base font-bold rounded-lg shadow hover:shadow-md transition-all duration-200 border border-white/10 backdrop-blur-sm"
+            >
+              <span className="flex items-center gap-2">
+                {isRTL ? 'اطلب الخدمة الآن' : 'order the service now'}
+                <Send className="w-4 h-4" />
+              </span>
+            </button>
+          </div>
+        )}
 
         {/* قسم الآراء والتعليقات — تصميم زجاجي متناسق مع الصفحة */}
         <div className="mt-32 sm:mt-10">
@@ -1079,22 +1101,7 @@ const CategoryPage: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* Mobile CTA — auto hide */}
-      {!isFormExpanded && showMobileCTA && (
-        <div className="fixed bottom-40 left-3 right-3 z-50 lg:hidden">
-          <button
-            onClick={() => {
-              setIsFormExpanded(true);
-              setShowMobileCTA(false);
-              setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
-            }}
-            className="w-full py-3 bg-gradient-to-r from-[#A0A5C0] to-[#7A7E95] text-white text-base font-bold rounded-lg shadow-md flex items-center justify-center gap-1.5"
-          >
-            <Send className="w-4 h-4" />
-                {isRTL ? 'اطلب الخدمة الان ' : 'Add Your Rating'}
-          </button>
-        </div>
-      )}
+      
 
       <div className="fixed bottom-5 right-5 z-50">
         <div className="relative group">
