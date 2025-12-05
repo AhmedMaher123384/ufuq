@@ -58,6 +58,7 @@ const ClientsSection: React.FC = () => {
   </h2>
 </div>
 
+
         {/* الكاروسيل */}
         <div className="relative">
           <Slider {...settings}>

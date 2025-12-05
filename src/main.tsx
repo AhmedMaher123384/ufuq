@@ -11,6 +11,7 @@ import Navbar from './components/layout/Navbar';
 import GlobalFooter from './components/layout/GlobalFooter';
 import CustomCursor from './components/ui/CustomCursor';
 import WhatsAppButton from './components/ui/WhatsAppButton';
+import DefaultSEO from './components/seo/DefaultSEO';
 import App from './App';
 import ProductDetail from './components/ProductDetail';
 import ProductsByCategory from './components/ProductsByCategory';
@@ -112,6 +113,7 @@ const LayoutWrapper: React.FC = () => {
 
   return (
     <>
+      <DefaultSEO />
       <CustomCursor />
       {!shouldHideNavbar && <Navbar />}
       {!shouldHideWhatsApp && <WhatsAppButton />}

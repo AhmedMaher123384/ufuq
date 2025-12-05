@@ -806,7 +806,7 @@ export const resources = {
         clear_all: "Clear All"
       },
       our_products: {
-        title: "Our Products",
+        title: "Our services",
         subtitle: "Discover our diverse collection of high-quality products",
         view_all: "View All",
         categories: "Categories",

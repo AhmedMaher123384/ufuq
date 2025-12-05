@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLoading } from '../../contexts/LoadingContext';
 import { isDesktopDevice } from '../../utils/deviceDetection';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo2.png';
 
 const LoadingScreen: React.FC = () => {
   const { isLoading } = useLoading();

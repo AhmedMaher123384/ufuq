@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import { smartToast } from '../utils/toastConfig';
 import { extractIdFromSlug, isValidSlug, createProductSlug } from '../utils/slugify';
 import {
@@ -326,8 +327,52 @@ const ProductDetail: React.FC = () => {
     );
   }
 
+  const pageTitle = `${getLocalizedContent('name')} | ${getCategoryName() || 'أفق الرقمية'}`;
+  const pageDescription = getLocalizedContent('description');
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  const productSlug = createProductSlug(product.id, getLocalizedContent('name'));
+  const canonical = `${siteUrl}/product/${productSlug}`;
+  const productImage = buildImageUrl(product.mainImage);
+
   return (
-    <section className="min-h-screen bg-[#16161B] relative overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
+    <>
+      <Helmet>
+        <title>{pageTitle}</title>
+        {pageDescription && <meta name="description" content={pageDescription} />}
+        <link rel="canonical" href={canonical} />
+        {/* Open Graph */}
+        <meta property="og:type" content="product" />
+        <meta property="og:title" content={pageTitle} />
+        {pageDescription && <meta property="og:description" content={pageDescription} />}
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={productImage} />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        {pageDescription && <meta name="twitter:description" content={pageDescription} />}
+        <meta name="twitter:image" content={productImage} />
+
+        {/* JSON-LD: Product */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: getLocalizedContent('name'),
+            description: pageDescription,
+            image: productImage,
+            brand: { '@type': 'Brand', name: 'أفق الرقمية' },
+            offers: {
+              '@type': 'Offer',
+              priceCurrency: 'SAR',
+              price: product.price,
+              availability: product.isAvailable ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+              url: canonical,
+            },
+          })}
+        </script>
+      </Helmet>
+
+      <section className="min-h-screen bg-[#16161B] relative overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-[#18b5d8]/10 via-transparent to-[#18b5d8]/10"></div>
@@ -518,6 +563,7 @@ const ProductDetail: React.FC = () => {
         <RelatedProducts currentProductId={product.id} categoryId={product.categoryId} />
       </div>
     </section>
+    </>
   );
 };
 

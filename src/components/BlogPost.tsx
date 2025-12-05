@@ -53,11 +53,45 @@ const BlogPost: React.FC = () => {
   }
 
   const imageUrl = post.featuredImage ? buildImageUrl(post.featuredImage) : '/images/default-blog.jpg';
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  const canonical = post ? `${siteUrl}/blog/${post.slug}` : `${siteUrl}/blog`;
 
   return (
     <>
       <Helmet>
         <title>{post.title} | المدونة</title>
+        <meta name="description" content={post.excerpt || post.title} />
+        <link rel="canonical" href={canonical} />
+        {/* Open Graph */}
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt || post.title} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={imageUrl} />
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.excerpt || post.title} />
+        <meta name="twitter:image" content={imageUrl} />
+
+        {/* JSON-LD: BlogPosting */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+            headline: post.title,
+            image: imageUrl,
+            datePublished: post.createdAt,
+            author: { '@type': 'Person', name: post.author },
+            publisher: {
+              '@type': 'Organization',
+              name: 'أفق الرقمية',
+              logo: { '@type': 'ImageObject', url: `${siteUrl}/logo.png` },
+            },
+            description: post.excerpt || post.title,
+          })}
+        </script>
       </Helmet>
 
       <article 
