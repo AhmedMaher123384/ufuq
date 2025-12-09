@@ -201,7 +201,7 @@ const App: React.FC = () => {
             return new Promise<void>((resolve) => {
               let loadedCount = 0;
               const imagesToPreload = [
-                '/favi.ico',
+                '/logo.png',
                 // يمكن إضافة صور أخرى مهمة هنا
               ];
               
