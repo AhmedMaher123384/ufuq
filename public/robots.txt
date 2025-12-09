@@ -26,6 +26,8 @@ Disallow: /api/
 # Allow important pages
 Allow: /products/
 Allow: /category/
+Allow: /services
+Allow: /service/
 Allow: /product/
 Allow: /contact/
 Allow: /about/
@@ -33,6 +35,6 @@ Allow: /privacy-policy/
 Allow: /return-policy/
 
 # Important files
-Allow: /logo1.png
+Allow: /logo.png
 Allow: /manifest.json
 Allow: /google-site-info.txt
