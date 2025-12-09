@@ -57,12 +57,12 @@ const HeroSection: React.FC = () => {
               |
             </span> 
             <a  
-              href="mailto:info@UfuqDigital.com 
+              href="mailto:info@ufuq-digital.com 
 " 
               className="text-white text-sm font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
               style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
             >
-              info@UfuqDigital.com 
+              info@ufuq-digital.com 
             </a> 
           </div>
           <div className="absolute right-0 top-0 h-full w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>

@@ -363,7 +363,7 @@ const TermsAndConditions: React.FC = () => {
                       <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#7a7a7a] flex-shrink-0" />
                       <span className="text-gray-100 text-sm sm:text-base">{t('terms_and_conditions.contact.email_label')}</span>
                     </div>
-                    <span className="font-bold text-[#7a7a7a] text-sm sm:text-base break-all">info@UfuqDigital.com</span>
+                    <span className="font-bold text-[#7a7a7a] text-sm sm:text-base break-all">info@ufuq-digital.com</span>
                   </div>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 hover:scale-[1.02] transition-transform duration-300 p-2 rounded-lg hover:bg-[#7a7a7a]/10">
                     <div className="flex items-center gap-2">

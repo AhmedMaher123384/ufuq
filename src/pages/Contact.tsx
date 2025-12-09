@@ -287,7 +287,7 @@ const Contact: React.FC = () => {
                       </div>
                       <div>
                         <h3 className="font-bold text-white text-base">{t('contact.info.email')}</h3>
-                        <p className="text-[#ffffff]/70 text-base break-all">info@UfuqDigital.com</p>
+                        <p className="text-[#ffffff]/70 text-base break-all">info@ufuq-digital.com</p>
                       </div>
                     </div>
                   </div>

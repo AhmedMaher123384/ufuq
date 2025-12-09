@@ -159,12 +159,12 @@ const GlobalFooter: React.FC = () => {
     <div className="flex gap-2">
       <Mail className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
       <a
-        href="mailto:info@UfuqDigital.com"
+        href="mailto:info@ufuq-digital.com"
         dir="ltr"
         className="block text-left hover:text-white transition-colors duration-200 break-words"
         style={{ paddingLeft: '2px' }}
       >
-        info@UfuqDigital.com
+        info@ufuq-digital.com
       </a>
     </div>
                   </div>
