@@ -29,20 +29,19 @@ const resources = {
   }
 };
 
-// Debug logging
-console.log('i18n config - arProductDetail:', arProductDetail);
-console.log('i18n config - resources:', resources);
-
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'ar', // Set Arabic as the default language
-    fallbackLng: 'ar',
+    fallbackLng: 'en',
+    supportedLngs: ['ar', 'en'],
+    nonExplicitSupportedLngs: true,
+    load: 'languageOnly',
+    cleanCode: true,
     defaultNS: 'translation',
     ns: ['translation', 'common', 'product_detail', 'product_card', 'product'],
-    debug: true,
+    debug: import.meta.env.DEV,
     
     interpolation: {
       escapeValue: false, // React already does escaping

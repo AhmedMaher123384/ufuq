@@ -506,6 +506,7 @@
     "contact_us": "Contact Us",
     "privacy_policy": "Privacy Policy",
     "terms_conditions": "Terms & Conditions",
+    "refund_dispute_policy": "Refund and Dispute Policy",
     "our_work": "portfolio",
     "blog": "Blog",
     "partners": "Our Partners",
@@ -913,6 +914,62 @@
     "contact": {
       "title": "Contact Us",
       "description": "For any inquiries regarding these terms and conditions, please contact via:",
+      "email_label": "Email:",
+      "phone_label": "Mobile / WhatsApp:"
+    },
+    "back_to_home": "Back to Home"
+  },
+  "refund_dispute_policy": {
+    "title": "Refund and Dispute Policy",
+    "last_updated": "Last updated: 25 December 2025",
+    "introduction": "This policy explains cancellations, refunds, and dispute handling related to the digital services and products provided by UfuqDigital. By using the website or completing a purchase, you agree to this policy.",
+    "definitions": {
+      "title": "First: Definitions",
+      "agency": "Agency:",
+      "agency_text": "UfuqDigital.com and all digital services provided through it.",
+      "client": "Client:",
+      "client_text": "Any individual or entity purchasing a service/digital product or requesting a project.",
+      "services": "Digital Services:",
+      "services_text": "Such as website, e-commerce, and mobile app development, campaign management, design, branding, and similar services."
+    },
+    "cancellation": {
+      "title": "Second: Cancellation before work starts",
+      "point1": "You may request cancellation before the actual work begins or before scheduling, by contacting us and providing the order number.",
+      "point2": "If work has started, the team has been allocated, or any part of the service has been performed, fees may apply for the completed work.",
+      "point3": "For milestone-based projects, any started or delivered milestone may be considered non-refundable.",
+      "point4": "Client delays in responding do not automatically stop the project or waive completed work, unless agreed in writing."
+    },
+    "refund_rules": {
+      "title": "Third: Refund eligibility",
+      "point1": "A refund may be available if we fail to deliver the agreed service due to our fault and no suitable alternative is provided.",
+      "point2": "If there is a technical issue preventing proper delivery or usage, we will first attempt to fix or re-deliver before considering a refund.",
+      "point3": "Partial refunds may be issued based on the actual completed work, according to our technical assessment and project records.",
+      "point4": "Services that have been delivered and accepted by the client (explicitly or implicitly) are considered completed and non-refundable.",
+      "point5": "Third-party fees (payment providers or external platforms) may not be refundable if their policies do not allow reversals."
+    },
+    "dispute": {
+      "title": "Fourth: Disputes and complaint handling",
+      "point1": "If you have a dispute, please contact us within 7 days of delivery or when the issue appears.",
+      "point2": "Provide clear details such as order number, issue description, and supporting evidence (screenshots/links) when needed.",
+      "point3": "We will review and respond within a reasonable business timeframe, and may propose a fix, partial rework, or service credit.",
+      "point4": "If no amicable resolution is reached, you may refer the matter to the competent authorities under the laws of Saudi Arabia.",
+      "point5": "Quality assessment is based on the agreed contract/scope of work between both parties."
+    },
+    "chargeback": {
+      "title": "Fifth: Bank chargebacks",
+      "point1": "We recommend contacting us first before filing a chargeback to resolve the matter faster.",
+      "point2": "If a chargeback is filed, related services or deliveries may be paused until the payment provider investigation is completed.",
+      "point3": "We may submit documentation proving scope, delivery, and communications to the financial institution as required."
+    },
+    "processing": {
+      "title": "Sixth: Refund processing time",
+      "point1": "If a refund is approved, we will process it within 5–10 business days from approval.",
+      "point2": "The time for funds to appear may vary depending on your bank or payment provider.",
+      "point3": "Refunds are typically issued to the original payment method unless not technically possible."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "For questions, cancellation/refund requests, or complaints, please contact us via:",
       "email_label": "Email:",
       "phone_label": "Mobile / WhatsApp:"
     },

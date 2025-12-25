@@ -9,13 +9,16 @@ const LanguageCurrencySelector: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<'language' | 'currency'>('language');
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const currentLang = (i18n.resolvedLanguage || i18n.language || 'en').toLowerCase();
+  const langCode = currentLang.startsWith('en') ? 'en' : 'ar';
+  const isRTL = langCode === 'ar';
 
   const languages = [
     { code: 'ar', name: 'العربية', nativeName: 'العربية', flag: '🇸🇦', dir: 'rtl' },
     { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸', dir: 'ltr' },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find(lang => lang.code === langCode) || languages[0];
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -33,7 +36,6 @@ const LanguageCurrencySelector: React.FC = () => {
     i18n.changeLanguage(langCode);
     document.documentElement.lang = langCode;
     document.documentElement.dir = langCode === 'ar' ? 'rtl' : 'ltr';
-    localStorage.setItem('selectedLanguage', langCode);
     setIsOpen(false);
   };
 
@@ -126,10 +128,10 @@ const LanguageCurrencySelector: React.FC = () => {
                     }`}
                   >
                     <div className="flex items-center justify-center w-5 h-5 rounded bg-white/10 text-xs font-bold text-cyan-300">
-                      {i18n.language === 'ar' ? currency.symbol : currency.symbolEn}
+                      {isRTL ? currency.symbol : currency.symbolEn}
                     </div>
                     <div className="flex-1">
-                      <div className="text-xs font-medium">{i18n.language === 'ar' ? currency.nameAr : currency.name}</div>
+                      <div className="text-xs font-medium">{isRTL ? currency.nameAr : currency.name}</div>
                     </div>
                     {currentCurrency.code === currency.code && (
                       <Check className="w-2.5 h-2.5 text-cyan-400" />

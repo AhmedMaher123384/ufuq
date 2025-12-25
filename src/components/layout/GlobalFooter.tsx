@@ -53,6 +53,9 @@ const GlobalFooter: React.FC = () => {
     { name: t('footer.blog'), to: "/blog" },
     { name: t('footer.contact_us'), to: "/contact" },
     { name: t('footer.products'), to: "/services" },
+    { name: t('footer.privacy_policy'), to: "/privacy-policy" },
+    { name: t('footer.terms_conditions'), to: "/terms-and-conditions" },
+    { name: t('footer.refund_dispute_policy'), to: "/refund-and-dispute-policy" },
   ];
 
   return (

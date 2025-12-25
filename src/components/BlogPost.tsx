@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { buildImageUrl } from '../config/api';
 import { mockBlogPosts } from '../mock/blogMock';
 
-interface BlogPost {
+interface BlogPostItem {
   id: number;
   title: string;
   slug: string;
@@ -21,7 +21,7 @@ interface BlogPost {
 const BlogPost: React.FC = () => {
   const { t, i18n } = useTranslation();
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
+  const [post, setPost] = useState<BlogPostItem | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {

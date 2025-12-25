@@ -25,6 +25,7 @@ import Contact from './pages/Contact';
 import CategoryPage from './components/CategoryPage';
 import PrivacyPolicy from './components/home/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import RefundAndDisputePolicy from './pages/RefundAndDisputePolicy';
 import ScrollToTop from './components/ui/ScrollToTop';
 import Dashboard from './components/Dashboard';
 
@@ -156,6 +157,7 @@ const LayoutWrapper: React.FC = () => {
           {/* Policy Routes */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/refund-and-dispute-policy" element={<RefundAndDisputePolicy />} />
           
 
           

@@ -107,7 +107,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ staticPages }) => {
               <div className="space-y-4">
                 <div className="flex items-center justify-center lg:justify-start gap-3 text-gray-400">
                   <Phone className="w-5 h-5 text-[#18b5d8]" />
-                  <span className="text-sm">+201069006131</span>
+                  <span className="text-sm">+2+966 54 309 8895</span>
                 </div>
                 
                 <div className="flex items-center justify-center lg:justify-start gap-3 text-gray-400">

@@ -5,7 +5,7 @@ URL: https://ghem.store
 Logo: https://ghem.store/logo1.png
 Logo File: /public/logo1.png (copied from /src/assets/logo1.png)
 Logo Verified: YES - File exists and accessible
-Contact: +201069006131
+Contact: +2+966 54 309 8895
 Email: info@ghem.store
 Country: Saudi Arabia
 Language: Arabic

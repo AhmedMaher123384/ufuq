@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 const DynamicToastContainer: React.FC = () => {
   const { i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const currentLang = (i18n.resolvedLanguage || i18n.language || 'en').toLowerCase();
+  const isRTL = currentLang.startsWith('ar');
 
   return (
     <ToastContainer

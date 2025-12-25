@@ -6,14 +6,16 @@ const LanguageSelector: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const isRTL = (i18n.language || '').toLowerCase().startsWith('ar');
+  const currentLang = (i18n.resolvedLanguage || i18n.language || 'en').toLowerCase();
+  const langCode = currentLang.startsWith('en') ? 'en' : 'ar';
+  const isRTL = langCode === 'ar';
 
   const languages = [
     { code: 'ar', name: 'العربية', nativeName: 'العربية', flag: '🇸🇦', dir: 'rtl' },
     { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸', dir: 'ltr' },
   ];
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLanguage = languages.find(lang => lang.code === langCode) || languages[0];
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -31,7 +33,6 @@ const LanguageSelector: React.FC = () => {
     i18n.changeLanguage(langCode);
     document.documentElement.lang = langCode;
     document.documentElement.dir = langCode === 'ar' ? 'rtl' : 'ltr';
-    localStorage.setItem('selectedLanguage', langCode);
     setIsOpen(false);
   };
 

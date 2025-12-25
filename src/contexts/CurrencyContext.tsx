@@ -63,6 +63,8 @@ const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined
 
 export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { i18n } = useTranslation();
+  const currentLang = (i18n.resolvedLanguage || i18n.language || 'en').toLowerCase();
+  const isRTL = currentLang.startsWith('ar');
   const [currentCurrency, setCurrentCurrency] = useState<Currency>(CURRENCIES[0]); // Default to SAR
   const [isLoading, setIsLoading] = useState(false);
   const [exchangeRates, setExchangeRates] = useState<{[key: string]: number}>({
@@ -154,13 +156,11 @@ export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }
       // Use cached exchange rates for synchronous conversion
       const rate = exchangeRates[currentCurrency.code] || 1;
       const convertedPrice = price * rate;
-      
-      const isRTL = i18n.language === 'ar';
       const currencySymbol = getCurrentCurrencySymbol();
       
       // Format number based on language
       const formattedNumber = convertedPrice.toLocaleString(
-        i18n.language === 'ar' ? 'ar-SA' : 'en-US',
+        isRTL ? 'ar-SA' : 'en-US',
         {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
@@ -185,7 +185,7 @@ export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (!i18n || !i18n.language) {
       return currentCurrency.symbolEn; // Default to English symbol
     }
-    return i18n.language === 'ar' ? currentCurrency.symbol : currentCurrency.symbolEn;
+    return isRTL ? currentCurrency.symbol : currentCurrency.symbolEn;
   };
 
   const value = {

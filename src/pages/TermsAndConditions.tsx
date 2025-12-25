@@ -357,21 +357,48 @@ const TermsAndConditions: React.FC = () => {
               </h2>
               <div className="bg-[#7a7a7a]/15 border border-white/10 rounded-xl sm:rounded-2xl p-4 sm:p-6 animate-scaleIn mobile-padding ultra-mobile-padding">
                 <p className="text-gray-100 mb-3 sm:mb-4 text-sm sm:text-base leading-relaxed">{t('terms_and_conditions.contact.description')}</p>
-                <div className="space-y-2 sm:space-y-3">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 hover:scale-[1.02] transition-transform duration-300 p-2 rounded-lg hover:bg-[#7a7a7a]/10">
-                    <div className="flex items-center gap-2">
-                      <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#7a7a7a] flex-shrink-0" />
-                      <span className="text-gray-100 text-sm sm:text-base">{t('terms_and_conditions.contact.email_label')}</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <a
+                    href="mailto:info@ufuq-digital.com"
+                    className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-4 sm:p-5 transition-all duration-300 hover:border-[#7a7a7a]/50 hover:bg-white/10 hover:-translate-y-0.5"
+                    dir="ltr"
+                  >
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#24a67b]/10 via-transparent to-transparent" />
+                    <div className="relative flex items-start gap-3">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#24a67b]/20 border border-white/10 flex items-center justify-center flex-shrink-0">
+                        <Mail className="w-5 h-5 text-[#24a27b]" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs sm:text-sm font-semibold text-gray-100/90">
+                          {t('terms_and_conditions.contact.email_label')}
+                        </div>
+                        <div className="mt-1 text-sm sm:text-base font-bold text-white break-all">
+                          info@ufuq-digital.com
+                        </div>
+                      </div>
                     </div>
-                    <span className="font-bold text-[#7a7a7a] text-sm sm:text-base break-all">info@ufuq-digital.com</span>
-                  </div>
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 hover:scale-[1.02] transition-transform duration-300 p-2 rounded-lg hover:bg-[#7a7a7a]/10">
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#7a7a7a] flex-shrink-0" />
-                      <span className="text-gray-100 text-sm sm:text-base">{t('terms_and_conditions.contact.phone_label')}</span>
+                  </a>
+
+                  <a
+                    href="tel:+966543098895"
+                    className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-4 sm:p-5 transition-all duration-300 hover:border-[#7a7a7a]/50 hover:bg-white/10 hover:-translate-y-0.5"
+                    dir="ltr"
+                  >
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#24a67b]/10 via-transparent to-transparent" />
+                    <div className="relative flex items-start gap-3">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#24a67b]/20 border border-white/10 flex items-center justify-center flex-shrink-0">
+                        <Phone className="w-5 h-5 text-[#24a27b]" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs sm:text-sm font-semibold text-gray-100/90">
+                          {t('terms_and_conditions.contact.phone_label')}
+                        </div>
+                        <div className="mt-1 text-sm sm:text-base font-bold text-white break-words">
+                          +966 54 309 8895
+                        </div>
+                      </div>
                     </div>
-                    <span className="font-bold text-[#7a7a7a] text-sm sm:text-base">01069006131</span>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>

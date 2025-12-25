@@ -20,7 +20,7 @@ const DefaultSEO: React.FC = () => {
   const { i18n } = useTranslation();
   const siteUrl = getSiteUrl();
   const canonical = siteUrl + location.pathname;
-  const currentLang = (i18n.language || 'ar').toLowerCase().startsWith('en') ? 'en' : 'ar';
+  const currentLang = (i18n.language || 'en').toLowerCase().startsWith('en') ? 'en' : 'ar';
 
   const organizationLd = {
     '@context': 'https://schema.org',

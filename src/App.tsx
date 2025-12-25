@@ -115,14 +115,16 @@ interface Client {
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const currentLang = (i18n.resolvedLanguage || i18n.language || 'en').toLowerCase();
+  const langCode = currentLang.startsWith('en') ? 'en' : 'ar';
+  const isRTL = langCode === 'ar';
   const { isLoading, setIsLoading } = useLoading();
 
   // Update document direction when language changes
   useEffect(() => {
     document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    document.documentElement.lang = i18n.language;
-  }, [isRTL, i18n.language]);
+    document.documentElement.lang = langCode;
+  }, [isRTL, langCode]);
   const [categoryProducts, setCategoryProducts] = useState<CategoryProducts[]>([]);
   const [themes, setThemes] = useState<Theme[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
