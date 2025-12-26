@@ -469,7 +469,7 @@ const App: React.FC = () => {
         return;
       }
       const cData: Client[] = [
-        { id: 1, name: 'عميل 1', logo: logoImg, website: 'https://UfuqDigital.com', createdAt: new Date().toISOString() },
+        { id: 1, name: 'عميل 1', logo: logoImg, website: 'https://ufuq-digital.com', createdAt: new Date().toISOString() },
         { id: 2, name: 'عميل 2', logo: footerImg, website: '', createdAt: new Date().toISOString() },
       ];
       setClients(cData);

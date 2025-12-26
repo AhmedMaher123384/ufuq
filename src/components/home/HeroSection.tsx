@@ -5,9 +5,11 @@ import hero from '../../assets/hhero.webp';
 import heroMobile from '../../assets/herrro.jpeg';
 
 const HeroSection: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const mobileImgRef = useRef<HTMLImageElement | null>(null);
   const desktopImgRef = useRef<HTMLImageElement | null>(null);
+  const currentLang = (i18n.resolvedLanguage || i18n.language || 'en').toLowerCase();
+  const isEnglish = currentLang.startsWith('en');
 
   useEffect(() => {
     // Apply native fetch priority via DOM to avoid React warning and TS typing issues
@@ -132,23 +134,43 @@ const HeroSection: React.FC = () => {
 
   {/* الموبايل فقط – نفس ألوان الديسكتوب + مرفوعة فوق شوية */}
   {/* الموبايل – سطر واحد بالكامل + ألوان سيلفر وأخضر غامق + مرفوعة فوق */}
-<h1 
-  className="block md:hidden text-2xl sm:text-3xl font-bold tracking-tight text-center font-cairo px-6 absolute inset-x-0"
-  style={{ top: '10%' }}   
->
-    <span className="text-gray-300">نحو </span>
-  <span className="text-green-700 font-extrabold text-2xl sm:text-3xl">أُفق</span>
-    <span className="text-gray-300"> جديد من الإبداع الرقمي</span>
-</h1>
+  {isEnglish ? (
+    <h1
+      className="block md:hidden text-[12px] sm:text-sm font-bold tracking-tight leading-none text-center font-cairo px-6 absolute inset-x-0 whitespace-nowrap"
+      style={{ top: '10%' }}
+      dir="ltr"
+    >
+      <span className="text-gray-300">Towards </span>
+      <span className="text-green-700 font-extrabold text-[12px] sm:text-sm">Ufuq</span>
+      <span className="text-gray-300"> a new horizon of digital creativity</span>
+    </h1>
+  ) : (
+    <h1
+      className="block md:hidden text-2xl sm:text-3xl font-bold tracking-tight text-center font-cairo px-6 absolute inset-x-0"
+      style={{ top: '10%' }}
+    >
+      <span className="text-gray-300">نحو </span>
+      <span className="text-green-700 font-extrabold text-2xl sm:text-3xl">أُفق</span>
+      <span className="text-gray-300"> جديد من الإبداع الرقمي</span>
+    </h1>
+  )}
 
   {/* === الديسكتوب: جملة سطر واحد + كلمة "أُفق" خضرا غامق === */}
 {/* === الديسكتوب فقط: أُفق أخضر غامق + الباقي سيلفر فاتح ناصع === */}
 <div className="hidden md:block absolute top-[50%] left-[15%] -translate-y-1/2">
-  <h1 className="text-3xl lg:text-5xl font-bold tracking-wider text-right font-cairo whitespace-nowrap">
-    <span className="text-gray-300">نحو </span>
-    <span className="text-green-700">أُفق</span>
-    <span className="text-gray-300"> جديد من الإبداع الرقمي</span>
-  </h1>
+  {isEnglish ? (
+    <h1 className="text-xl lg:text-3xl font-bold tracking-wider text-left font-cairo whitespace-nowrap" dir="ltr">
+      <span className="text-gray-300">Towards </span>
+      <span className="text-green-700">Ufuq</span>
+      <span className="text-gray-300"> a new horizon of digital creativity</span>
+    </h1>
+  ) : (
+    <h1 className="text-3xl lg:text-5xl font-bold tracking-wider text-right font-cairo whitespace-nowrap">
+      <span className="text-gray-300">نحو </span>
+      <span className="text-green-700">أُفق</span>
+      <span className="text-gray-300"> جديد من الإبداع الرقمي</span>
+    </h1>
+  )}
 </div>
 
 </div>
