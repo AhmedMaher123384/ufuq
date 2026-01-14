@@ -42,7 +42,7 @@ const DefaultSEO: React.FC = () => {
   };
 
   return (
-    <Helmet defaultTitle="أفق الرقمية | حلول رقمية متكاملة" titleTemplate="%s | أفق الرقمية" htmlAttributes={{ lang: currentLang, dir: currentLang === 'ar' ? 'rtl' : 'ltr' }}>
+    <Helmet defaultTitle="أفق الرقمية | حلول شركة رقمية متكاملة" titleTemplate="%s | أفق الرقمية" htmlAttributes={{ lang: currentLang, dir: currentLang === 'ar' ? 'rtl' : 'ltr' }}>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="theme-color" content="#0b0e14" />
       <meta name="description" content="أفق الرقمية: حلول رقمية متكاملة، مواقع وتطبيقات وواجهات جذابة بأداء قوي." />
