@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaInstagram, FaWhatsapp, FaFacebookF, FaSnapchatGhost } from 'react-icons/fa';
+import { FaInstagram, FaWhatsapp, FaFacebookF, FaSnapchatGhost, FaCcVisa, FaCcMastercard, FaCcApplePay, FaStripe } from 'react-icons/fa';
 import { ArrowUp, Mail, Phone, MapPin } from 'lucide-react';
 import { mockCategories } from '../../mock/categories';
 import { createCategorySlug } from '../../utils/slugify';
@@ -189,6 +189,33 @@ const GlobalFooter: React.FC = () => {
                        className="p-2.5 bg-[#25252f] border border-[#2a2a35] rounded-xl hover:border-[#8F93A5] hover:scale-105 transition-all duration-300">
                       <img src={wordpress} alt="WordPress" className="h-7 object-contain" />
                     </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-10 flex justify-center">
+              <div className="px-5 py-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                <div className={`flex items-center justify-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <p className="text-white/80 text-xs md:text-sm font-medium text-center">
+                    {t('footer.secure_payment_tagline')}
+                  </p>
+                  <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                    {[
+                      { label: 'Stripe', icon: FaStripe },
+                      { label: 'Visa', icon: FaCcVisa },
+                      { label: 'Mastercard', icon: FaCcMastercard },
+                      { label: 'Apple Pay', icon: FaCcApplePay },
+                    ].map((m) => (
+                      <div
+                        key={m.label}
+                        className="w-12 h-12 bg-[#25252f] border border-[#2a2a35] rounded-xl flex items-center justify-center hover:border-[#8F93A5] hover:bg-[#2a2a35] hover:scale-105 transition-all duration-300"
+                        aria-label={m.label}
+                        title={m.label}
+                      >
+                        <m.icon className="w-8 h-8 text-[#8F93A5]" aria-hidden="true" />
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
