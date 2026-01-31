@@ -8,7 +8,7 @@ const WhatsAppButton: React.FC = () => {
   const [rotation, setRotation] = useState(0);
   const location = useLocation();
   const phoneNumber = '+02010947354';
-  const message = t('whatsapp_button.message');
+  const message = t('السلام عليكم ، عندي استفسار بخصوص مشروع ');
 
   useEffect(() => {
     // إخفاء الزر في صفحات الإدارة والتسجيل فقط
