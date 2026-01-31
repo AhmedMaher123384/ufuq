@@ -50,7 +50,7 @@ const HeroSection: React.FC = () => {
               style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
               dir="ltr"
             >
-              +966 54 309 8895
+              +201010947354
             </a>
             <span 
               className="text-white text-sm font-light tracking-wider"

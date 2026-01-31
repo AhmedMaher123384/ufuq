@@ -275,7 +275,7 @@ const RefundAndDisputePolicy: React.FC = () => {
                         {t('refund_dispute_policy.contact.phone_label')}
                       </div>
                       <div className="mt-1 text-sm sm:text-base font-bold text-white break-words">
-                        +966 54 309 8895
+                        +201010947354
                       </div>
                     </div>
                   </div>

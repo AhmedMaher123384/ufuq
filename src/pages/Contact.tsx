@@ -271,7 +271,7 @@ const Contact: React.FC = () => {
                       </div>
                       <div>
                         <h3 className="font-bold text-white text-base">{t('contact.info.phone')}</h3>
-                        <p className="text-[#ffffff]/70 text-base" dir="ltr">+966 54 309 8895</p>
+                        <p className="text-[#ffffff]/70 text-base" dir="ltr">+201010947354</p>
                       </div>
                     </div>
                   </div>

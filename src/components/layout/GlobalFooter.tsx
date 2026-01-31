@@ -155,7 +155,7 @@ const GlobalFooter: React.FC = () => {
         className="block text-left hover:text-white transition-colors duration-200 break-words"
         style={{ paddingLeft: '2px' }}
       >
-        +966 54 309 8895
+        +201010947354
       </a>
     </div>
                     {/* Email */}
