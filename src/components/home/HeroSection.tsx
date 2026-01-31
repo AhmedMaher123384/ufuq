@@ -45,7 +45,7 @@ const HeroSection: React.FC = () => {
         <div className="absolute left-8 top-1/2 -translate-y-1/2 z-20 hidden lg:flex">
           <div className="relative pr-8 flex flex-col items-end space-y-6">
             <a 
-              href="tel:+966543098895" 
+              href="tel:+02010947354" 
               className="text-white text-sm font-light tracking-wider hover:text-[#7e22ce] transition-all duration-300 cursor-pointer"
               style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
               dir="ltr"

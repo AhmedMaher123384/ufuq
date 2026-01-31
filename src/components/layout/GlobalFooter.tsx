@@ -150,7 +150,7 @@ const GlobalFooter: React.FC = () => {
                       <div className="flex gap-2">
       <Phone className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" aria-hidden="true" />
       <a
-        href="tel:+966543098895"
+        href="tel:+02010947354"
         dir="ltr"
         className="block text-left hover:text-white transition-colors duration-200 break-words"
         style={{ paddingLeft: '2px' }}
