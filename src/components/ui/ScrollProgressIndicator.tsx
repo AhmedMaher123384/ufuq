@@ -17,7 +17,8 @@ const ScrollProgressIndicator: React.FC = () => {
     const main = document.querySelector('#main-content') as HTMLElement | null;
     let nodes: HTMLElement[] = [];
     if (main) {
-      nodes = Array.from(main.querySelectorAll(':scope > section[data-section]')) as HTMLElement[];
+      // التعديل هنا: إزالة ':scope >' للبحث عن أي section داخل main
+      nodes = Array.from(main.querySelectorAll('section[data-section]')) as HTMLElement[];
     } else {
       nodes = Array.from(document.querySelectorAll('section[data-section]')) as HTMLElement[];
     }
@@ -54,8 +55,9 @@ const ScrollProgressIndicator: React.FC = () => {
     let currentSectionIndex = 0;
     const main = document.querySelector('#main-content') as HTMLElement | null;
     for (let i = 0; i < sections.length; i++) {
-      const selector = `:scope > section[data-section="${sections[i].id}"]`;
-      const element = main ? main.querySelector(selector) : document.querySelector(`section[data-section="${sections[i].id}"]`);
+      // التعديل هنا: إزالة ':scope >'
+      const selector = `section[data-section="${sections[i].id}"]`;
+      const element = main ? main.querySelector(selector) : document.querySelector(selector);
       if (element) {
         const rect = element.getBoundingClientRect();
         const elementTop = rect.top + scrollTop;
@@ -66,7 +68,7 @@ const ScrollProgressIndicator: React.FC = () => {
     }
     setCurrentSection(currentSectionIndex);
 
-    const hero = main ? main.querySelector(':scope > section[data-section="hero"]') : document.querySelector('section[data-section="hero"]');
+    const hero = main ? main.querySelector('section[data-section="hero"]') : document.querySelector('section[data-section="hero"]');
     if (hero) {
       const rect = hero.getBoundingClientRect();
       if (rect.bottom > 100) {
@@ -99,7 +101,8 @@ const ScrollProgressIndicator: React.FC = () => {
   const handleSectionClick = useCallback((index: number) => {
     const section = sections[index];
     const main = document.querySelector('#main-content') as HTMLElement | null;
-    const element = main ? main.querySelector(`:scope > section[data-section="${section.id}"]`) : document.querySelector(`section[data-section="${section.id}"]`);
+    // التعديل هنا: إزالة ':scope >'
+    const element = main ? main.querySelector(`section[data-section="${section.id}"]`) : document.querySelector(`section[data-section="${section.id}"]`);
     element?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [sections]);
 
@@ -107,7 +110,7 @@ const ScrollProgressIndicator: React.FC = () => {
     <div 
       className={`fixed top-1/2 -translate-y-1/2 z-50 hidden lg:block transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       style={{ 
-        [isRTL ? 'left' : 'right']: '24px'   // معكوس: في RTL يسار، في LTR يمين
+        [isRTL ? 'left' : 'right']: '24px'
       }}
     >
       <style dangerouslySetInnerHTML={{
@@ -122,26 +125,23 @@ const ScrollProgressIndicator: React.FC = () => {
         `
       }} />
       <div className="relative" style={{ height: `${40 + (sections.length * 35)}px` }}>
-        {/* خط عمودي */}
         <div 
           className="absolute top-0 w-0.5 h-full bg-gradient-to-b from-[#24a27b] to-[#24a27b]"
-          style={{ [isRTL ? 'left' : 'right']: '8px' }}   // معكوس
+          style={{ [isRTL ? 'left' : 'right']: '8px' }}
         ></div>
         
-        {/* نقطة البداية */}
         <div 
           className="absolute top-0 w-4 h-4 active-dot rounded-full"
-          style={{ [isRTL ? 'left' : 'right']: '2px' }}   // معكوس
+          style={{ [isRTL ? 'left' : 'right']: '2px' }}
         ></div>
         
-        {/* النقاط والنصوص */}
         {sections.map((section, index) => (
           <div key={section.id} className="relative">
             <div 
               className={`absolute w-2 h-2 rounded-full cursor-pointer transition-all duration-300 ${index === currentSection ? 'scale-125 active-dot' : 'white-dot hover:scale-125'}`}
               style={{ 
                 top: `${30 + (index * 35)}px`,
-                [isRTL ? 'left' : 'right']: '5px'   // معكوس
+                [isRTL ? 'left' : 'right']: '5px'
               }}
               onClick={() => handleSectionClick(index)}
             ></div>
@@ -150,7 +150,7 @@ const ScrollProgressIndicator: React.FC = () => {
               className={`absolute cursor-pointer transition-all duration-300 whitespace-nowrap ${index === currentSection ? 'text-[#24a27b] font-semibold active-text' : 'text-[#8F93A5] hover:text-[#16161b]'}`}
               style={{ 
                 top: `${22 + (index * 35)}px`,
-                [isRTL ? 'left' : 'right']: '20px'   // معكوس
+                [isRTL ? 'left' : 'right']: '20px'
               }}
               onClick={() => handleSectionClick(index)}
             >
@@ -159,10 +159,9 @@ const ScrollProgressIndicator: React.FC = () => {
           </div>
         ))}
         
-        {/* نقطة النهاية */}
         <div 
           className="absolute bottom-0 w-4 h-4 active-dot rounded-full"
-          style={{ [isRTL ? 'left' : 'right']: '2px' }}   // معكوس
+          style={{ [isRTL ? 'left' : 'right']: '2px' }}
         ></div>
       </div>
     </div>

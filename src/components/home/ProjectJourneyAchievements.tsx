@@ -63,7 +63,6 @@ const ProjectJourneyAchievements: React.FC = () => {
     setActiveStepIndex(activeStepIndex === index ? null : index);
   };
 
-  // FAQ content ثنائي اللغة يعتمد على i18n.language الحالية
   const faqContent = useMemo(() => {
     const isArabic = i18n.language?.startsWith('ar');
     return {
@@ -95,7 +94,6 @@ const ProjectJourneyAchievements: React.FC = () => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
   };
 
-  // Animation variants
   const fadeUpVariant = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
@@ -113,8 +111,8 @@ const ProjectJourneyAchievements: React.FC = () => {
 
   return (
     <>
-      {/* Project Journey Section */}
-      <section ref={journeyRef} className="py-12 lg:py-24 bg-[#16161B]">
+      {/* Project Journey Section - تم تعديل padding و margin لتقليل الفجوة */}
+      <section ref={journeyRef} className="py-8 lg:py-16 -mt-16 lg:-mt-24 bg-[#16161B]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <motion.div
             initial="hidden"
@@ -222,8 +220,8 @@ const ProjectJourneyAchievements: React.FC = () => {
         </div>
       </section>
 
-      {/* FAQ Section - يتغير مع اللغة تلقائياً */}
-      <section ref={faqRef} className="py-16 lg:py-24 bg-[#16161B] relative overflow-hidden">
+      {/* FAQ Section - تم إضافة data-section="faq" */}
+      <section ref={faqRef} data-section="faq" className="py-16 lg:py-24 bg-[#16161B] relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 bg-[#8F93A5]/5 rounded-full blur-3xl" />
           <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#6c7081]/5 rounded-full blur-3xl" />

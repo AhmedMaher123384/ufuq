@@ -6,7 +6,7 @@ import heroMobile from '../../assets/mob.png';
 
 const BTN_POSITION = {
   desktop: { top: '75%', left: '51%' },
-  mobile:  { top: '72%', left: '50%' }, // تم التعديل هنا
+  mobile:  { top: '72%', left: '50%' },
 };
 
 const HeroSection: React.FC = () => {
@@ -23,7 +23,10 @@ const HeroSection: React.FC = () => {
 
   const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+    const servicesSection = document.querySelector('section[data-section="categories"]');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -72,7 +75,6 @@ const HeroSection: React.FC = () => {
           .hero-btn-arrow { width: 12px; height: 12px; }
           .hero-btn-dot { width: 5px; height: 5px; }
 
-          /* تقليل الأنيميشن */
           .hero-btn::after {
             animation: none;
           }
@@ -143,7 +145,7 @@ const HeroSection: React.FC = () => {
           color: #c0e0cc;
           letter-spacing: 0.02em;
           cursor: pointer;
-          border: 1px solid rgba(255,255,255,0.05); /* تحسين الشكل */
+          border: 1px solid rgba(255,255,255,0.05);
           outline: none;
           text-decoration: none;
           overflow: hidden;
@@ -210,7 +212,7 @@ const HeroSection: React.FC = () => {
 
             <div className="hero-btn-wrapper">
               <span className="hero-btn-inner-bg" aria-hidden="true" />
-              <a href="#services" onClick={scrollToServices} className="hero-btn services-btn" dir={isEnglish ? 'ltr' : 'rtl'}>
+              <a href="#categories" onClick={scrollToServices} className="hero-btn services-btn" dir={isEnglish ? 'ltr' : 'rtl'}>
                 <span className="hero-btn-dot" />
                 {isEnglish ? 'Our Services' : 'خدماتنا'}
                 <svg className="hero-btn-arrow" viewBox="0 0 24 24" fill="none">
