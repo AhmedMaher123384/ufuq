@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import hero from '../../assets/hhhh.webp';
-import heroMobile from '../../assets/mob.png';
+import heroMobile from '../../assets/mobb.png';
 
 const BTN_POSITION = {
   desktop: { top: '75%', left: '51%' },

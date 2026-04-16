@@ -74,6 +74,34 @@ const FOOTER_STYLES = `
         justify-content: center;
     }
   }
+
+  /* ========== تحسينات الجزء السفلي للموبايل (جديدة) ========== */
+  @media (max-width: 640px) {
+    .gf-bottom-strip {
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 1.5rem !important;
+      text-align: center;
+    }
+    .gf-bottom-strip > div {
+      width: 100%;
+      justify-content: center;
+    }
+    .gf-legal-item {
+      justify-content: center !important;
+      text-align: center;
+    }
+    .gf-copyright {
+      order: 3; /* يخلي الحقوق تظهر في الآخر */
+      margin-top: 0.5rem;
+    }
+    .gf-commercial {
+      order: 1;
+    }
+    .gf-tax {
+      order: 2;
+    }
+  }
 `;
 
 const GlobalFooter: React.FC = () => {
@@ -237,19 +265,19 @@ const GlobalFooter: React.FC = () => {
               </div>
 
               <a href="https://maps.app.goo.gl/PPaGaxxoxC5pzrFq8" target="_blank" rel="noopener noreferrer" className="gf-map-wrap block relative overflow-hidden rounded-2xl flex-1 xl:flex-none xl:h-44 border border-white/10 shadow-2xl">
-  <iframe
-    title="Ufuq Location"
-    src="https://www.google.com/maps?q=24.771376,46.623678&z=15&output=embed"
-    width="100%"
-    height="100%"
-    className="absolute inset-0 w-full h-full"
-    style={{ border: 0, filter: 'grayscale(0.6) brightness(0.7)', pointerEvents: 'none' }}
-    loading="lazy"
-  />
-  <div className="absolute bottom-0 left-0 right-0 text-center py-2 text-[10px] tracking-widest uppercase text-white/70 font-bold bg-black/60 backdrop-blur-sm">
-    {isRTL ? 'اعثر علينا على الخريطة ↗' : 'Find us on Map ↗'}
-  </div>
-</a>
+                <iframe
+                  title="Ufuq Location"
+                  src="https://www.google.com/maps?q=24.771376,46.623678&z=15&output=embed"
+                  width="100%"
+                  height="100%"
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 0, filter: 'grayscale(0.6) brightness(0.7)', pointerEvents: 'none' }}
+                  loading="lazy"
+                />
+                <div className="absolute bottom-0 left-0 right-0 text-center py-2 text-[10px] tracking-widest uppercase text-white/70 font-bold bg-black/60 backdrop-blur-sm">
+                  {isRTL ? 'اعثر علينا على الخريطة ↗' : 'Find us on Map ↗'}
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -257,11 +285,11 @@ const GlobalFooter: React.FC = () => {
         {/* الخط الفاصل */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
 
-        {/* الشريط السفلي الاحترافي - التعديل الجديد بالكامل */}
-        <div className="max-w-[1600px] mx-auto px-4 md:px-10 lg:px-16 py-12">
-          <div className="flex flex-col gap-10">
+        {/* ========== الشريط السفلي المُعدل بالكامل ========== */}
+        <div className="max-w-[1600px] mx-auto px-4 md:px-10 lg:px-16 py-10">
+          <div className="flex flex-col gap-8">
             
-            {/* بوابات الدفع */}
+            {/* بوابات الدفع (كما هي) */}
             <div className="gf-payments flex flex-wrap items-center justify-center gap-4">
               {[
                 { label: 'Stripe', icon: FaStripe },
@@ -285,45 +313,43 @@ const GlobalFooter: React.FC = () => {
               </div>
             </div>
 
-            {/* بيانات السجل الضريبي والحقوق - التوزيع الثلاثي */}
-           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6 border-t border-white/5">
+            {/* العناصر الثلاثة (السجل - الضريبة - الحقوق) مرتبة حسب الطلب */}
+            <div className="gf-bottom-strip flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-white/5">
+              
+              {/* السجل التجاري - يظهر أولاً في الموبايل */}
+              <div className="gf-commercial flex items-center gap-3">
+                <span className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-[#8f93a5]">
+                  <Building2 className="w-4 h-4" />
+                </span>
+                <div>
+                  <p className="text-[9px] text-white/25 uppercase tracking-wider leading-none mb-0.5">
+                    {isRTL ? 'السجل التجاري' : 'Commercial Register'}
+                  </p>
+                  <p dir="ltr" className="text-[13px] font-mono text-white/70 tracking-widest leading-none">1010234567</p>
+                </div>
+              </div>
 
-  {/* السجل التجاري */}
-  {/* السجل التجاري */}
-<div className="flex items-center gap-3">
-  <span className="w-9 h-9 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-[#8f93a5]">
-    <Building2 className="w-4 h-4" />
-  </span>
-  <div>
-    <p className="text-[9px] text-white/25 uppercase tracking-wider leading-none mb-0.5">
-      {isRTL ? 'السجل التجاري' : 'Commercial Register'}
-    </p>
-    <p dir="ltr" className="text-[13px] font-mono text-white/70 tracking-widest leading-none">1010234567</p>
-  </div>
-</div>
+              {/* الرقم الضريبي - يظهر ثانياً في الموبايل */}
+              <div className="gf-tax flex items-center gap-3">
+                <div className={isRTL ? 'text-left' : 'text-right'}>
+                  <p className="text-[9px] text-white/25 uppercase tracking-wider leading-none mb-0.5">
+                    {isRTL ? 'الرقم الضريبي' : 'Tax Number (VAT)'}
+                  </p>
+                  <p dir="ltr" className="text-[13px] font-mono text-white/70 tracking-widest leading-none">312004226200003</p>
+                </div>
+                <img src={vat} alt="VAT" className="h-8 w-auto object-contain opacity-60 hover:opacity-100 transition" />
+              </div>
 
-  {/* الحقوق */}
-  <div className="text-center">
-    <p className="text-[12px] text-white/40 tracking-wide">
-      © {new Date().getFullYear()} <span className="text-white/80 font-bold tracking-widest uppercase">Ufuq Digital</span>
-    </p>
-    <p className="text-[10px] text-white/20 mt-0.5 uppercase tracking-[0.2em]">
-      {isRTL ? 'جميع الحقوق محفوظة' : 'All Rights Reserved'}
-    </p>
-  </div>
-
-  {/* الرقم الضريبي */}
-  <div className="flex items-center gap-3">
-    <div className={isRTL ? 'text-left' : 'text-right'}>
-      <p className="text-[9px] text-white/25 uppercase tracking-wider leading-none mb-0.5">
-        {isRTL ? 'الرقم الضريبي' : 'Tax Number (VAT)'}
-      </p>
-      <p dir="ltr" className="text-[13px] font-mono text-white/70 tracking-widest leading-none">312004226200003</p>
-    </div>
-    <img src={vat} alt="VAT" className="h-8 w-auto object-contain opacity-60 hover:opacity-100 transition" />
-  </div>
-
-</div>
+              {/* الحقوق - تظهر أخيراً في الموبايل */}
+              <div className="gf-copyright text-center">
+                <p className="text-[12px] text-white/40 tracking-wide">
+                  © {new Date().getFullYear()} <span className="text-white/80 font-bold tracking-widest uppercase">Ufuq Digital</span>
+                </p>
+                <p className="text-[10px] text-white/20 mt-0.5 uppercase tracking-[0.2em]">
+                  {isRTL ? 'جميع الحقوق محفوظة' : 'All Rights Reserved'}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
