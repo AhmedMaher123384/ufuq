@@ -355,7 +355,7 @@ const GlobalFooter: React.FC = () => {
       </footer>
 
       {showScrollTop && (
-        <button onClick={scrollToTop} className={`gf-scroll-top fixed bottom-6 w-12 h-12 flex items-center justify-center rounded-2xl z-50 bg-gradient-to-br from-[#8f93a5] to-[#5c6070] text-white shadow-xl md:hidden ${isRTL ? 'right-6' : 'left-6'}`}>
+        <button onClick={scrollToTop} className={`gf-scroll-top fixed bottom-6 w-12 h-12 flex items-center justify-center rounded-2xl z-50 bg-gradient-to-br from-[#8f93a5] to-[#5c6070] text-white shadow-xl md:hidden ${isRTL ? 'left-6' : 'right-6'}`}>
           <ArrowUp className="w-6 h-6" />
         </button>
       )}
