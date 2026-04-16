@@ -141,15 +141,15 @@ const CustomCursor = () => {
                  isClicking ? 'animate-professionalPulse' : ''
                }`}
             style={{
-              left: position.x - 20,
-              top: position.y - 20,
-              width: '40px',
-              height: '40px',
+              left: position.x - 12.5,   // ✅ تعديل: 25/2 = 12.5
+              top: position.y - 12.5,
+              width: '25px',
+              height: '25px',
               borderRadius: '50%',
               background: 'linear-gradient(135deg, #24a27b 0%, #1d785bff, #0e7d5aff)',
               boxShadow: '0 0 20px #24a27b, inset 0 0 20px rgba(255, 255, 255, 0.2)',
               transform: isClicking ? 'scale(1.5)' : 'scale(1)',
-               opacity: isClicking ? '0.9' : '0.7',
+              opacity: isClicking ? '0.9' : '0.7',
             }}
           >
             {/* Inner glow */}
@@ -164,8 +164,8 @@ const CustomCursor = () => {
             <div
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
               style={{
-                width: '6px',
-                height: '6px',
+                width: '4px',
+                height: '4px',
                 borderRadius: '50%',
                 backgroundColor: '#ffffff',
                 boxShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
@@ -177,14 +177,14 @@ const CustomCursor = () => {
           <div
             className="fixed pointer-events-none z-[9998]"
             style={{
-              left: position.x - 30,
-              top: position.y - 30,
-              width: '60px',
-              height: '60px',
+              left: position.x - 16,     // ✅ تعديل: 32/2 = 16
+              top: position.y - 16,
+              width: '32px',
+              height: '32px',
               borderRadius: '50%',
               border: '1px solid #24a27b',
               transform: isClicking ? 'scale(2)' : 'scale(1)',
-               opacity: isClicking ? '0.3' : '0.6',
+              opacity: isClicking ? '0.3' : '0.6',
             }}
           />
         </>
@@ -196,7 +196,7 @@ const CustomCursor = () => {
           key={ripple.id}
           className="fixed pointer-events-none z-[9997] animate-ripple"
           style={{
-            left: ripple.x - 25,
+            left: ripple.x - 25,   // ✅ سليم لأن 50/2 = 25
             top: ripple.y - 25,
             width: '50px',
             height: '50px',

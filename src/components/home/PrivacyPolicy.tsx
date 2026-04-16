@@ -486,7 +486,7 @@ const PrivacyPolicy: React.FC = () => {
                   </a>
 
                   <a
-                    href="tel:+02010947354"
+                    href="tel:++966535166370"
                     className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-4 sm:p-5 transition-all duration-300 hover:border-[#24a67b]/40 hover:bg-white/10 hover:-translate-y-0.5"
                     dir="ltr"
                   >
@@ -500,7 +500,7 @@ const PrivacyPolicy: React.FC = () => {
                           {t('privacy_policy.contact.phone_label')}
                         </div>
                         <div className="mt-1 text-sm sm:text-base font-bold text-white break-words">
-                          +201010947354
+                          +966535166370
                         </div>
                       </div>
                     </div>

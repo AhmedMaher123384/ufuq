@@ -5,10 +5,10 @@ URL: https://ghem.store
 Logo: https://ghem.store/logo1.png
 Logo File: /public/logo1.png (copied from /src/assets/logo1.png)
 Logo Verified: YES - File exists and accessible
-Contact: +2+201010947354
+Contact: +966535166370
 Email: info@ghem.store
 Country: Saudi Arabia
 Language: Arabic
 Category: E-commerce Store - Fashion - Graduation Wear
-Copyright: © 2025 غِيم - GHEM Store | تم التطوير بواسطة ArtCode
+Copyright:  غِيم - GHEM Store | تم التطوير بواسطة ArtCode
 Last Updated: 2025-01-18 

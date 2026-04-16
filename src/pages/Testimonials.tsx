@@ -317,7 +317,7 @@ const Testimonials: React.FC = () => {
           <div className="text-center">
             <img src={logo} alt=" UfuqDigital" className="h-8 w-auto mx-auto mb-4 filter brightness-0 invert" />
             <p className="text-gray-400">
-              © 2025 أُفق الرقمية. جميع الحقوق محفوظة.
+               أُفق الرقمية. جميع الحقوق محفوظة.
             </p>
           </div>
         </div>

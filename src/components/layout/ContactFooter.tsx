@@ -52,7 +52,7 @@ const ContactSection = () => {
           {/* Copyright Section */}
           <div className="text-center">
             <div className="inline-flex items-center text-gray-600 text-xs sm:text-sm font-medium bg-white/60 backdrop-blur-xl border border-gray-300/40 px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl">
-              <span className="text-gray-800 font-bold">© 2025 أُفق الرقمية -  UfuqDigital</span>
+              <span className="text-gray-800 font-bold"> أُفق الرقمية -  UfuqDigital</span>
               <span className="mx-2">|</span>
               <span className="bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent font-bold">تم التطوير بواسطة ArtCode</span>
             </div>

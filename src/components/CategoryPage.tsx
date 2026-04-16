@@ -918,7 +918,7 @@ const CategoryPage: React.FC = () => {
           </div>
         )}
 
-        {/* قسم الآراء والتعليقات — تصميم زجاجي متناسق مع الصفحة */}
+      {/*
         <div className="mt-32 sm:mt-10">
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.25)] p-5 sm:p-6 ring-1 ring-white/5">
             <div className="flex items-center justify-between mb-6">
@@ -996,7 +996,7 @@ const CategoryPage: React.FC = () => {
                         {r.opinion}
                       </motion.p>
                     </div>
-                    
+
                     {r.opinion.length > 120 && (
                       <button
                         onClick={() => toggleExpandReview(r.id)}
@@ -1007,7 +1007,7 @@ const CategoryPage: React.FC = () => {
                         <ChevronDown className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform ${expandedReviews[r.id] ? 'rotate-180' : ''}`} />
                       </button>
                     )}
-                    
+
                   </motion.div>
                 ))}
               </div>
@@ -1015,8 +1015,8 @@ const CategoryPage: React.FC = () => {
           </div>
         </div>
 
-        {/* مودال إضافة تعليق — Bottom Sheet على الموبايل */}
-        <AnimatePresence>
+      */}
+       {/*  <AnimatePresence>
           {showReviewModal && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -1098,8 +1098,12 @@ const CategoryPage: React.FC = () => {
               </motion.div>
             </motion.div>
           )}
+            
+        
         </AnimatePresence>
+        */}
       </div>
+      
 
       
 

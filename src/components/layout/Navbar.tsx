@@ -677,7 +677,6 @@ function Navbar() {
 
   return (
     <>
-      {/* Floating Logo - Removed per user request */}
       {/* Main Navbar */}
       <nav 
         className={`fixed top-0 w-full z-50 transition-all duration-500 ease-out ${
@@ -715,44 +714,46 @@ function Navbar() {
                   </div>
                   <div className="absolute inset-0 bg-white/5 scale-0 group-active:scale-100 transition-transform duration-150 rounded-lg"></div>
                 </button>
-                {/* Mobile Cart Button removed per mock-data requirement */}
               </div>
+              
               {/* Logo */}
-            <div className="flex items-center">
-              <Link to="/" onClick={() => setIsMenuOpen(false)} className="cursor-pointer">
-                <img src={logo} alt="Logo" className="h-14 sm:h-16 w-auto" />
-              </Link>
-            </div>
-            {/* Mobile Language Selector (outside the menu) */}
-            <div className="flex items-center lg:hidden">
-              <LanguageSelector />
-            </div>
-            {/* Desktop Navigation Links - Exact order: Home, Services, first 3 categories, Contact */}
-            <div className="hidden lg:flex items-center space-x-1">
+              <div className="flex items-center">
+                <Link to="/" onClick={() => setIsMenuOpen(false)} className="cursor-pointer">
+                  <img src={logo} alt="Logo" className="h-14 sm:h-16 w-auto" />
+                </Link>
+              </div>
+              
+              {/* Mobile Language Selector (outside the menu) */}
+              <div className="flex items-center lg:hidden">
+                <LanguageSelector />
+              </div>
+              
+              {/* Desktop Navigation Links - Enhanced Hover Effects */}
+              <div className="hidden lg:flex items-center space-x-1">
                 {/* Home */}
                 <Link
                   key="nav-home"
                   to="/"
                   onClick={() => setIsMenuOpen(false)}
-                  className={`relative px-4 py-2 text-white/90 hover:text-white rounded-xl hover:bg-white/10 transition-all duration-300 text-sm font-medium group ${
-                    isActive('/') ? 'text-[#18b5d8]' : ''
+                  className={`nav-link-animated relative px-4 py-2 text-white/90 hover:text-[#10b981] rounded-xl transition-all duration-300 text-sm font-medium group ${
+                    isActive('/') ? 'text-[#10b981]' : ''
                   }`}
                 >
                   {t('nav.home')}
-                  <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-[#18b5d8] to-[#0891b2] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </Link>
+                
                 {/* Services */}
                 <Link
                   key="nav-services"
                   to="/services"
                   onClick={() => setIsMenuOpen(false)}
-                  className={`relative px-4 py-2 text-white/90 hover:text-white rounded-xl hover:bg-white/10 transition-all duration-300 text-sm font-medium group ${
-                    isActive('/services') ? 'text-[#18b5d8]' : ''
+                  className={`nav-link-animated relative px-4 py-2 text-white/90 hover:text-[#10b981] rounded-xl transition-all duration-300 text-sm font-medium group ${
+                    isActive('/services') ? 'text-[#10b981]' : ''
                   }`}
                 >
                   {t('nav.categories')}
-                  <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-[#18b5d8] to-[#0891b2] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </Link>
+                
                 {/* First 3 Categories */}
                 {categories && categories.length > 0 && (
                   categories.slice(0, 3).map((c) => (
@@ -760,185 +761,251 @@ function Navbar() {
                       key={`cat-${c.id}`}
                       to={`/service/${createCategorySlug(c.id, c.name)}`}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`relative px-3 py-2 text-white/70 hover:text-white rounded-xl hover:bg-white/10 transition-all duration-300 text-sm`}
+                      className="nav-link-animated relative px-3 py-2 text-white/70 hover:text-[#10b981] rounded-xl transition-all duration-300 text-sm font-medium group"
                     >
                       {isRTL ? ((c as any).name_ar || c.name) : c.name}
                     </Link>
                   ))
                 )}
+                
                 {/* Contact */}
                 <Link
                   key="nav-contact"
                   to="/contact"
                   onClick={() => setIsMenuOpen(false)}
-                  className={`relative px-4 py-2 text-white/90 hover:text-white rounded-xl hover:bg-white/10 transition-all duration-300 text-sm font-medium group ${
-                    isActive('/contact') ? 'text-[#18b5d8]' : ''
+                  className={`nav-link-animated relative px-4 py-2 text-white/90 hover:text-[#10b981] rounded-xl transition-all duration-300 text-sm font-medium group ${
+                    isActive('/contact') ? 'text-[#10b981]' : ''
                   }`}
                 >
                   {t('nav.contact')}
-                  <div className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-[#18b5d8] to-[#0891b2] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </Link>
               </div>
+              
               {/* Action Buttons */}
               <div className="hidden lg:flex items-center space-x-3">
                 {/* Search Button */}
                 <LiveSearch />
                 {/* Language Selector */}
                 <LanguageSelector />
-                {/* Cart / Wishlist / Auth removed per mock-data requirement */}
               </div>
             </div>
           </div>
         </div>
+        
+        {/* Global Styles for Nav Link Animations */}
+        <style>{`
+          @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+          }
+          
+          @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.3), 0 0 10px rgba(16, 185, 129, 0.2); }
+            50% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.5), 0 0 25px rgba(16, 185, 129, 0.3); }
+          }
+          
+          .nav-link-animated {
+            position: relative;
+            overflow: hidden;
+          }
+          
+          .nav-link-animated::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #10b981, transparent);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transform-origin: ${isRTL ? 'right' : 'left'};
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+          }
+          
+          .nav-link-animated::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.4s ease;
+            border-radius: inherit;
+            z-index: -1;
+          }
+          
+          .nav-link-animated:hover::before {
+            transform: scaleX(1);
+            animation: shimmer 2s linear infinite;
+          }
+          
+          .nav-link-animated:hover::after {
+            opacity: 1;
+            transform: scale(1);
+            animation: glow-pulse 2s ease-in-out infinite;
+          }
+          
+          .nav-link-animated:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+          }
+          
+          /* Active state styling */
+          .nav-link-animated.text-\\[\\#10b981\\]::before {
+            transform: scaleX(1);
+            background: linear-gradient(90deg, #10b981, #10b981);
+          }
+        `}</style>
       </nav>
 
-  {/* === MOBILE MENU — Emerald Depth (Bottom Sheet) — أروش، أنقى، أنضف === */}
-{isMobile && (
-  <div
-    className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-300 ${
-      isMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
-    }`}
-    style={{ backgroundColor: 'rgba(0, 0, 0, 0.55)' }}
-    onClick={() => {
-      // إغلاق أنيق: scale-down + fade
-      const panel = document.querySelector('.mobile-bottom-sheet') as HTMLElement;
-      if (panel) {
-        panel.style.transform = 'translateY(80%) scale(0.97)';
-        panel.style.opacity = '0';
-        setTimeout(() => setIsMenuOpen(false), 250);
-      } else {
-        setIsMenuOpen(false);
-      }
-    }}
-  >
-    <div
-      className="mobile-bottom-sheet fixed bottom-0 left-0 right-0 bg-[#16161b] rounded-t-3xl overflow-hidden"
-      style={{
-        maxHeight: '92vh',
-        transform: isMenuOpen ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.97)',
-        transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s',
-        opacity: isMenuOpen ? 1 : 0,
-        willChange: 'transform, opacity',
-        touchAction: 'none',
-        boxShadow: '0 -12px 40px rgba(0,0,0,0.35)',
-      }}
-      ref={bottomSheetRef}
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Handle Bar — أنحف، أنظف */}
-      <div className="flex justify-center pt-3 pb-2">
-        <div className="w-8 h-1 bg-[#3a3a42] rounded-full"></div>
-      </div>
+      {/* === MOBILE MENU — Emerald Depth (Bottom Sheet) === */}
+      {isMobile && (
+        <div
+          className={`lg:hidden fixed inset-0 z-[60] transition-opacity duration-300 ${
+            isMenuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          }`}
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.55)' }}
+          onClick={() => {
+            const panel = document.querySelector('.mobile-bottom-sheet') as HTMLElement;
+            if (panel) {
+              panel.style.transform = 'translateY(80%) scale(0.97)';
+              panel.style.opacity = '0';
+              setTimeout(() => setIsMenuOpen(false), 250);
+            } else {
+              setIsMenuOpen(false);
+            }
+          }}
+        >
+          <div
+            className="mobile-bottom-sheet fixed bottom-0 left-0 right-0 bg-[#16161b] rounded-t-3xl overflow-hidden"
+            style={{
+              maxHeight: '92vh',
+              transform: isMenuOpen ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.97)',
+              transition: 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s',
+              opacity: isMenuOpen ? 1 : 0,
+              willChange: 'transform, opacity',
+              touchAction: 'none',
+              boxShadow: '0 -12px 40px rgba(0,0,0,0.35)',
+            }}
+            ref={bottomSheetRef}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Handle Bar */}
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-8 h-1 bg-[#3a3a42] rounded-full"></div>
+            </div>
 
-      {/* Content */}
-      <div className="flex flex-col flex-1 overflow-y-auto px-5 pb-6" style={{ maxHeight: '82vh' }}>
-        {/* Logo — مركز، نظيف */}
-        <div className="flex justify-center mb-7">
-          <Link to="/" onClick={() => setIsMenuOpen(false)}>
-            <img src={logo} alt="Logo" className="h-10 w-auto opacity-95" />
-          </Link>
-        </div>
+            {/* Content */}
+            <div className="flex flex-col flex-1 overflow-y-auto px-5 pb-6" style={{ maxHeight: '82vh' }}>
+              {/* Logo */}
+              <div className="flex justify-center mb-7">
+                <Link to="/" onClick={() => setIsMenuOpen(false)}>
+                  <img src={logo} alt="Logo" className="h-10 w-auto opacity-95" />
+                </Link>
+              </div>
 
-        {/* Search & Settings */}
-        <div className="mb-7">
-          <div className="flex items-center mb-3">
-            <div className="w-0.5 h-3 bg-[#10b981] rounded-full mr-3"></div>
-            <h3 className="text-[#7c7c84] text-[11px] font-semibold uppercase tracking-widest">
-              {t('nav.search_and_settings')}
-            </h3>
-          </div>
-          <div className="space-y-3.5">
-            <LiveSearch />
-          </div>
-        </div>
+              {/* Search & Settings */}
+              <div className="mb-7">
+                <div className="flex items-center mb-3">
+                  <div className="w-0.5 h-3 bg-[#10b981] rounded-full mr-3"></div>
+                  <h3 className="text-[#7c7c84] text-[11px] font-semibold uppercase tracking-widest">
+                    {t('nav.search_and_settings')}
+                  </h3>
+                </div>
+                <div className="space-y-3.5">
+                  <LiveSearch />
+                </div>
+              </div>
 
-        {/* Navigation — أروش، أنضف */}
-        <div>
-          <div className="flex items-center mb-4">
-            <div className="w-0.5 h-3 bg-[#10b981] rounded-full mr-3"></div>
-            <h3 className="text-[#7c7c84] text-[11px] font-semibold uppercase tracking-widest">
-              {t('nav.pages')}
-            </h3>
-          </div>
-
-          <div className="space-y-1.5">
-            {[
-              { name: t('nav.home'), href: '/', icon: Home, color: '#10b981' },
-              { name: t('nav.categories'), href: '/services', icon: Package, color: '#f59e0b' },
-              ...((categories && categories.length > 0)
-                ? categories.slice(0, 3).map((c) => ({
-                    name: isRTL ? ((c as any).name_ar || c.name) : c.name,
-                    href: `/service/${createCategorySlug(c.id, c.name)}`,
-                    icon: Grid3X3,
-                    color: '#3b82f6'
-                  }))
-                : []),
-              { name: t('nav.contact'), href: '/contact', icon: Phone, color: '#ef4444' }
-            ].map((link, index) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className={`flex items-center px-3.5 py-3 rounded-xl transition-all duration-250 group ${
-                  isActive(link.href)
-                    ? 'bg-[#10b981] bg-opacity-5 text-white'
-                    : 'text-[#b0b0b8] hover:bg-[#1a1a1f]'
-                }`}
-                style={{
-                  animation: isMenuOpen ? `fadeInUp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 60}ms forwards` : 'none',
-                  opacity: 0,
-                  transform: 'translateY(8px)',
-                }}
-              >
-                {/* Icon Container — أخضر عند النشط */}
-                <div
-                  className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-250 group-hover:scale-105"
-                  style={{
-                    backgroundColor: isActive(link.href)
-                      ? `${link.color}15`
-                      : 'rgba(255,255,255,0.04)',
-                  }}
-                >
-                  <link.icon
-                    size={16}
-                    className="text-[#a0a0a8]"
-                    style={{ color: isActive(link.href) ? link.color : undefined }}
-                  />
+              {/* Navigation */}
+              <div>
+                <div className="flex items-center mb-4">
+                  <div className="w-0.5 h-3 bg-[#10b981] rounded-full mr-3"></div>
+                  <h3 className="text-[#7c7c84] text-[11px] font-semibold uppercase tracking-widest">
+                    {t('nav.pages')}
+                  </h3>
                 </div>
 
-                <span className="font-medium text-[15px] flex-1 mr-2">{link.name}</span>
+                <div className="space-y-1.5">
+                  {[
+                    { name: t('nav.home'), href: '/', icon: Home, color: '#10b981' },
+                    { name: t('nav.categories'), href: '/services', icon: Package, color: '#10b981' },
+                    ...((categories && categories.length > 0)
+                      ? categories.slice(0, 3).map((c) => ({
+                          name: isRTL ? ((c as any).name_ar || c.name) : c.name,
+                          href: `/service/${createCategorySlug(c.id, c.name)}`,
+                          icon: Grid3X3,
+                          color: '#10b981'
+                        }))
+                      : []),
+                    { name: t('nav.contact'), href: '/contact', icon: Phone, color: '#10b981' }
+                  ].map((link, index) => (
+                    <Link
+                      key={link.name}
+                      to={link.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`mobile-nav-link flex items-center px-3.5 py-3 rounded-xl transition-all duration-250 group ${
+                        isActive(link.href)
+                          ? 'bg-[#10b981] bg-opacity-5 text-[#10b981]'
+                          : 'text-[#b0b0b8] hover:bg-[#1a1a1f] hover:text-[#10b981]'
+                      }`}
+                      style={{
+                        animation: isMenuOpen ? `fadeInUp 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) ${index * 60}ms forwards` : 'none',
+                        opacity: 0,
+                        transform: 'translateY(8px)',
+                      }}
+                    >
+                      {/* Icon Container */}
+                      <div
+                        className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-250 group-hover:scale-105 group-hover:bg-[#10b981]/20"
+                        style={{
+                          backgroundColor: isActive(link.href)
+                            ? `${link.color}15`
+                            : 'rgba(255,255,255,0.04)',
+                        }}
+                      >
+                        <link.icon
+                          size={16}
+                          className="transition-colors duration-250"
+                          style={{ color: isActive(link.href) ? link.color : undefined }}
+                        />
+                      </div>
 
-                {/* Active Indicator — خط أيسر (لـ RTL) */}
-                {isActive(link.href) && (
-                  <div
-                    className="absolute left-0 top-1/2 w-0.5 h-5 rounded-full -translate-y-1/2"
-                    style={{ backgroundColor: '#10b981' }}
-                  ></div>
-                )}
-              </Link>
-            ))}
+                      <span className="font-medium text-[15px] flex-1 mr-2 group-hover:text-[#10b981] transition-colors duration-250">{link.name}</span>
+
+                      {/* Active Indicator */}
+                      {isActive(link.href) && (
+                        <div
+                          className="absolute top-1/2 w-0.5 h-5 rounded-full -translate-y-1/2"
+                          style={{ 
+                            backgroundColor: '#10b981',
+                            [isRTL ? 'right' : 'left']: '0'
+                          }}
+                        ></div>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Custom Animation */}
+            <style>{`
+              @keyframes fadeInUp {
+                from {
+                  opacity: 0;
+                  transform: translateY(10px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
+            `}</style>
           </div>
         </div>
-      </div>
-
-      {/* Custom Animation */}
-      <style >{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </div>
-  </div>
-)}
-
-      {/* AuthModal removed per mock-data requirement */}
+      )}
     </>
   );
 }

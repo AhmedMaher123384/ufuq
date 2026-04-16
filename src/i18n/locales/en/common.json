@@ -516,8 +516,8 @@
     "secure_payment_tagline": "Secure, encrypted payments for your money’s safety",
     "scroll_to_top": "Scroll to Top",
     "tax_number": "Tax Number: 35-2930287",
-    "copyright": "© 2025 UfuqDigital LLC. All rights reserved",
-    "location": "Riyadh, Saudi Arabia"
+    "copyright": " UfuqDigital LLC. All rights reserved",
+    "location": "Riyadh, Al Aqeeq, Prince Muhammad Ibn Salman "
   },
   "user_profile": {
     "error_loading_user_data": "Error loading user data",
@@ -692,7 +692,7 @@
       "phone": "Phone Number",
       "email": "Email",
       "location": "Location",
-      "location_value": "Saudi Arabia",
+      "location_value": "Riyadh, Al Aqeeq, Prince Muhammad Ibn Salman",
       "hours": "Working Hours",
       "hours_value": "Saturday - Thursday: 9 AM - 6 PM"
     },

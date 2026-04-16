@@ -107,7 +107,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ staticPages }) => {
               <div className="space-y-4">
                 <div className="flex items-center justify-center lg:justify-start gap-3 text-gray-400">
                   <Phone className="w-5 h-5 text-[#18b5d8]" />
-                  <span className="text-sm">+2+201010947354</span>
+                  <span className="text-sm">+966535166370</span>
                 </div>
                 
                 <div className="flex items-center justify-center lg:justify-start gap-3 text-gray-400">
@@ -129,7 +129,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ staticPages }) => {
           {/* قسم حقوق الطبع والنشر */}
           <div className="text-center space-y-2">
             <p className="text-gray-400 text-sm">
-              © 2025 أُفق الرقمية -  UfuqDigital | جميع الحقوق محفوظة
+               أُفق الرقمية -  UfuqDigital | جميع الحقوق محفوظة
             </p>
             <p className="text-gray-500 text-xs">
               تم التطوير بواسطة <span className="text-[#18b5d8] font-medium">ArtCode</span>
