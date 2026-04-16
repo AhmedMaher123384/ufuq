@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import hero from '../../assets/hhh.png';
+import hero from '../../assets/hhhh.webp';
 import heroMobile from '../../assets/mob.png';
 
 const BTN_POSITION = {
